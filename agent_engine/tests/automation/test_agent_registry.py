@@ -12,6 +12,9 @@ from agent_engine.automation.models.execution_result import (
 from agent_engine.automation.registry.agent_registry import AgentRegistry
 from agent_engine.contracts.action import ActionRequest
 from agent_engine.contracts.enums import ActionCategory, ToolType
+from agent_engine.automation.agents.mouse.mouse_agent import (
+    MouseAutomationAgent,
+)
 
 
 # =============================================================================
@@ -259,3 +262,28 @@ def test_each_registry_has_independent_storage() -> None:
 
     assert first_registry.count() == 1
     assert second_registry.count() == 0
+
+# =============================================================================
+# Mouse Agent Registration Tests
+# =============================================================================
+
+def test_mouse_agent_can_be_registered() -> None:
+    registry = AgentRegistry()
+    agent = MouseAutomationAgent()
+
+    registry.register(agent)
+
+    assert registry.count() == 1
+    assert registry.contains("mouse_agent")
+
+
+def test_registered_mouse_agent_can_be_retrieved() -> None:
+    registry = AgentRegistry()
+    agent = MouseAutomationAgent()
+
+    registry.register(agent)
+
+    retrieved = registry.get("mouse_agent")
+
+    assert retrieved is agent
+    assert isinstance(retrieved, MouseAutomationAgent)

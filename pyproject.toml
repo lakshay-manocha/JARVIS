@@ -1,0 +1,13 @@
+[project]
+name = "jarvis"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "easyocr>=1.7.2",
+    "numpy>=2.5.3",
+    "pillow>=12.3.0",
+    "pydantic>=2.13.5",
+    "pynput>=1.8.2",
+    "torch>=2.14.1",
+    "transformers>=5.18.0",
+]

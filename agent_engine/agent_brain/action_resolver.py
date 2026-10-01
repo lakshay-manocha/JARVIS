@@ -24,13 +24,14 @@ Pipeline position:
     ToolResolver
 
 The implementation is intentionally rule-based so it can later be replaced
-by a machine-learning action prediction model without changing the rest of
-the Agent Brain pipeline.
+by a machine-learning action prediction model without changing the rest
+of the Agent Brain pipeline.
 
 Responsibilities:
     • Read detected intents
     • Resolve canonical actions
     • Attach actions to interpreted tasks
+    • Validate actions against ActionRegistry
     • Record processing logs
 
 Author      : Team JARVIS
@@ -52,21 +53,37 @@ class ActionResolver:
     Resolves canonical executable actions from detected intents.
     """
 
-    # -------------------------------------------------------------------------
+    # =========================================================================
     # Intent → Canonical Action Mapping
-    # -------------------------------------------------------------------------
+    # =========================================================================
 
     _INTENT_ACTION_MAP: dict[IntentType, str] = {
+
+        # ---------------------------------------------------------------------
+        # Application / Website
+        # ---------------------------------------------------------------------
 
         IntentType.OPEN_APPLICATION: "open",
 
         IntentType.OPEN_WEBSITE: "open",
 
+        # ---------------------------------------------------------------------
+        # Web
+        # ---------------------------------------------------------------------
+
         IntentType.SEARCH_WEB: "search",
 
         IntentType.DOWNLOAD_FILE: "download",
 
+        # ---------------------------------------------------------------------
+        # Document
+        # ---------------------------------------------------------------------
+
         IntentType.SUMMARIZE_DOCUMENT: "summarize",
+
+        # ---------------------------------------------------------------------
+        # Filesystem
+        # ---------------------------------------------------------------------
 
         IntentType.DELETE_FILE: "delete",
 
@@ -75,11 +92,39 @@ class ActionResolver:
         IntentType.COPY_FILE: "copy",
 
         IntentType.RENAME_FILE: "rename",
+
+        # ---------------------------------------------------------------------
+        # Keyboard
+        # ---------------------------------------------------------------------
+
+        IntentType.TYPE_TEXT: "type",
+
+        IntentType.PRESS_KEY: "press",
+
+        IntentType.HOTKEY: "hotkey",
+
+        # ---------------------------------------------------------------------
+        # Mouse
+        # ---------------------------------------------------------------------
+
+        IntentType.MOVE_MOUSE: "move_mouse",
+
+        IntentType.MOUSE_CLICK: "mouse_click",
+
+        IntentType.MOUSE_DOUBLE_CLICK: "mouse_double_click",
+
+        IntentType.MOUSE_RIGHT_CLICK: "mouse_right_click",
+
+        IntentType.MOUSE_DOWN: "mouse_down",
+
+        IntentType.MOUSE_UP: "mouse_up",
+
+        IntentType.MOUSE_SCROLL: "mouse_scroll",
     }
 
-    # -------------------------------------------------------------------------
+    # =========================================================================
     # Public API
-    # -------------------------------------------------------------------------
+    # =========================================================================
 
     def resolve(
         self,
@@ -137,6 +182,10 @@ class ActionResolver:
 
             task.action = action
 
+            # -----------------------------------------------------------------
+            # Resolution result
+            # -----------------------------------------------------------------
+
             if action is not None:
 
                 resolved_count += 1
@@ -164,9 +213,9 @@ class ActionResolver:
 
         return context
 
-    # -------------------------------------------------------------------------
+    # =========================================================================
     # Internal Resolution
-    # -------------------------------------------------------------------------
+    # =========================================================================
 
     @classmethod
     def _resolve_action(
@@ -176,12 +225,28 @@ class ActionResolver:
         """
         Resolve a canonical action from an IntentType.
 
+        Resolution flow:
+
+            IntentType
+                ↓
+            Intent → Action mapping
+                ↓
+            ActionRegistry normalization
+                ↓
+            Canonical action validation
+                ↓
+            Canonical action
+
         Returns
         -------
         str | None
             Canonical action registered in ActionRegistry, or None when
-            the intent cannot be mapped to an executable action.
+            the intent cannot be mapped to a supported executable action.
         """
+
+        # ---------------------------------------------------------------------
+        # Step 1: Resolve intent to action
+        # ---------------------------------------------------------------------
 
         action = cls._INTENT_ACTION_MAP.get(intent)
 
@@ -189,10 +254,29 @@ class ActionResolver:
             return None
 
         # ---------------------------------------------------------------------
-        # Ensure action belongs to the canonical Action Registry.
+        # Step 2: Normalize the action through the registry
         # ---------------------------------------------------------------------
 
-        if not ActionRegistry.contains(action):
+        canonical_action = ActionRegistry.normalize(action)
+
+        # ---------------------------------------------------------------------
+        # Step 3: Validate canonical action
+        #
+        # ActionRegistry.contains() checks registry keys/aliases.
+        # We validate against the registry's canonical values as well.
+        # ---------------------------------------------------------------------
+
+        registered_actions = ActionRegistry.all_actions()
+
+        canonical_actions = set(
+            registered_actions.values()
+        )
+
+        if canonical_action not in canonical_actions:
             return None
 
-        return ActionRegistry.normalize(action)
+        # ---------------------------------------------------------------------
+        # Step 4: Return canonical executable action
+        # ---------------------------------------------------------------------
+
+        return canonical_action

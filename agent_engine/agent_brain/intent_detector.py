@@ -12,9 +12,8 @@ This module performs lightweight rule-based intent detection using normalized
 task text. The detected intent is stored as an IntentResult object and attached
 to each InterpretedTask.
 
-This module is intentionally designed so that the rule-based implementation can
-later be replaced by a machine learning intent classifier without affecting the
-rest of the pipeline.
+The rules are ordered from most specific to most generic so that a specific
+automation intent is not incorrectly classified by a generic keyword.
 
 Responsibilities:
     • Read interpreted tasks
@@ -27,6 +26,10 @@ Author      : Team JARVIS
 ===============================================================================
 """
 
+from __future__ import annotations
+
+import re
+
 from agent_engine.agent_brain.models.intent_result import IntentResult
 from agent_engine.agent_brain.models.processing_context import ProcessingContext
 from agent_engine.contracts.enums import IntentType, ProcessingStage
@@ -37,22 +40,16 @@ class IntentDetector:
     Detects the intent of interpreted tasks.
     """
 
+    # =========================================================================
+    # Public API
+    # =========================================================================
+
     def detect(
         self,
-        context: ProcessingContext
+        context: ProcessingContext,
     ) -> ProcessingContext:
         """
         Detect intents for every interpreted task.
-
-        Parameters
-        ----------
-        context : ProcessingContext
-            Current Agent Brain processing context.
-
-        Returns
-        -------
-        ProcessingContext
-            Updated processing context containing detected intents.
         """
 
         context.current_stage = ProcessingStage.DETECTING_INTENT
@@ -79,41 +76,46 @@ class IntentDetector:
 
         return context
 
-    # ------------------------------------------------------------------
+    # =========================================================================
     # Rule-Based Intent Detection
-    # ------------------------------------------------------------------
+    # =========================================================================
 
     def _detect_intent(
         self,
-        text: str
+        text: str,
     ) -> IntentResult:
         """
         Detect intent using rule-based pattern matching.
 
-        Website detection is performed before generic application opening so
-        that tasks such as:
+        Rules are intentionally ordered from specific to generic.
 
-            "open https://example.com"
+        For example:
 
-        are correctly classified as OPEN_WEBSITE rather than
-        OPEN_APPLICATION.
+            "move mouse to 500 300"
+
+        must be classified as:
+
+            MOVE_MOUSE
+
+        rather than:
+
+            MOVE_FILE
+
+        because "move mouse" is a specific mouse command while "move" alone
+        is a generic file-operation keyword.
         """
-
-        import re
 
         text = text.lower().strip()
 
-        # ------------------------------------------------------------------
-        # Website Detection
-        # ------------------------------------------------------------------
-        # Detect URLs explicitly.
-        # ------------------------------------------------------------------
+        # =====================================================================
+        # 1. WEBSITE
+        # =====================================================================
 
         url_pattern = r"https?://[^\s]+|www\.[^\s]+"
 
         contains_url = re.search(
             url_pattern,
-            text
+            text,
         ) is not None
 
         website_keywords = [
@@ -137,12 +139,12 @@ class IntentDetector:
                 detection_method="rule_based",
                 reasoning=(
                     "Detected website-opening language or URL in task."
-                )
+                ),
             )
 
-        # ------------------------------------------------------------------
-        # Web Search
-        # ------------------------------------------------------------------
+        # =====================================================================
+        # 2. WEB SEARCH
+        # =====================================================================
 
         search_keywords = [
             "search",
@@ -162,12 +164,12 @@ class IntentDetector:
                     reasoning=(
                         f"Matched keyword '{keyword}' "
                         f"for intent {IntentType.SEARCH_WEB.value}."
-                    )
+                    ),
                 )
 
-        # ------------------------------------------------------------------
-        # File Download
-        # ------------------------------------------------------------------
+        # =====================================================================
+        # 3. FILE DOWNLOAD
+        # =====================================================================
 
         download_keywords = [
             "download",
@@ -186,12 +188,12 @@ class IntentDetector:
                     reasoning=(
                         f"Matched keyword '{keyword}' "
                         f"for intent {IntentType.DOWNLOAD_FILE.value}."
-                    )
+                    ),
                 )
 
-        # ------------------------------------------------------------------
-        # Document Summarization
-        # ------------------------------------------------------------------
+        # =====================================================================
+        # 4. DOCUMENT SUMMARIZATION
+        # =====================================================================
 
         summarize_keywords = [
             "summarize",
@@ -210,12 +212,190 @@ class IntentDetector:
                         f"Matched keyword '{keyword}' "
                         f"for intent "
                         f"{IntentType.SUMMARIZE_DOCUMENT.value}."
-                    )
+                    ),
                 )
 
-        # ------------------------------------------------------------------
-        # File Deletion
-        # ------------------------------------------------------------------
+        # =====================================================================
+        # 5. MOUSE - DOUBLE CLICK
+        # =====================================================================
+
+        if "double click" in text:
+
+            return IntentResult(
+                intent=IntentType.MOUSE_DOUBLE_CLICK,
+                confidence=1.0,
+                detection_method="rule_based",
+                reasoning="Detected double-click mouse action.",
+            )
+
+        # =====================================================================
+        # 6. MOUSE - RIGHT CLICK
+        # =====================================================================
+
+        if "right click" in text:
+
+            return IntentResult(
+                intent=IntentType.MOUSE_RIGHT_CLICK,
+                confidence=1.0,
+                detection_method="rule_based",
+                reasoning="Detected right-click mouse action.",
+            )
+
+        # =====================================================================
+        # 7. MOUSE - MOVE
+        # =====================================================================
+
+        if (
+            "move mouse" in text
+            or "move cursor" in text
+        ):
+
+            return IntentResult(
+                intent=IntentType.MOVE_MOUSE,
+                confidence=1.0,
+                detection_method="rule_based",
+                reasoning="Detected mouse movement action.",
+            )
+
+        # =====================================================================
+        # 8. MOUSE - BUTTON DOWN
+        # =====================================================================
+
+        if (
+            "mouse down" in text
+            or "press mouse button" in text
+            or "hold mouse button" in text
+        ):
+
+            return IntentResult(
+                intent=IntentType.MOUSE_DOWN,
+                confidence=1.0,
+                detection_method="rule_based",
+                reasoning=(
+                    "Detected mouse button press-and-hold action."
+                ),
+            )
+
+        # =====================================================================
+        # 9. MOUSE - BUTTON UP
+        # =====================================================================
+
+        if (
+            "mouse up" in text
+            or "release mouse button" in text
+        ):
+
+            return IntentResult(
+                intent=IntentType.MOUSE_UP,
+                confidence=1.0,
+                detection_method="rule_based",
+                reasoning=(
+                    "Detected mouse button release action."
+                ),
+            )
+
+        # =====================================================================
+        # 10. MOUSE - SCROLL
+        # =====================================================================
+
+        if "scroll" in text:
+
+            return IntentResult(
+                intent=IntentType.MOUSE_SCROLL,
+                confidence=1.0,
+                detection_method="rule_based",
+                reasoning="Detected mouse scrolling action.",
+            )
+
+        # =====================================================================
+        # 11. MOUSE - CLICK
+        # =====================================================================
+
+        if "click" in text:
+
+            return IntentResult(
+                intent=IntentType.MOUSE_CLICK,
+                confidence=1.0,
+                detection_method="rule_based",
+                reasoning="Detected mouse click action.",
+            )
+
+        # =====================================================================
+        # 12. KEYBOARD - TYPE TEXT
+        # =====================================================================
+
+        type_keywords = [
+            "type",
+            "write",
+            "enter text",
+        ]
+
+        for keyword in type_keywords:
+
+            if text.startswith(keyword):
+
+                return IntentResult(
+                    intent=IntentType.TYPE_TEXT,
+                    confidence=1.0,
+                    detection_method="rule_based",
+                    reasoning=(
+                        f"Matched keyword '{keyword}' "
+                        f"for intent {IntentType.TYPE_TEXT.value}."
+                    ),
+                )
+
+        # =====================================================================
+        # 13. KEYBOARD - HOTKEY
+        # =====================================================================
+
+        hotkey_keywords = [
+            "hotkey",
+            "shortcut",
+        ]
+
+        for keyword in hotkey_keywords:
+
+            if keyword in text:
+
+                return IntentResult(
+                    intent=IntentType.HOTKEY,
+                    confidence=1.0,
+                    detection_method="rule_based",
+                    reasoning=(
+                        f"Matched keyword '{keyword}' "
+                        f"for intent {IntentType.HOTKEY.value}."
+                    ),
+                )
+
+        # =====================================================================
+        # 14. KEYBOARD - PRESS KEY
+        # =====================================================================
+
+        press_keywords = [
+            "press",
+            "hit",
+        ]
+
+        for keyword in press_keywords:
+
+            if (
+                text.startswith(keyword)
+                and "mouse button" not in text
+            ):
+
+                return IntentResult(
+                    intent=IntentType.PRESS_KEY,
+                    confidence=1.0,
+                    detection_method="rule_based",
+                    reasoning=(
+                        f"Matched keyword '{keyword}' "
+                        f"for intent {IntentType.PRESS_KEY.value}."
+                    ),
+                )
+
+        # =====================================================================
+        # 15. FILE - DELETE
+        # =====================================================================
 
         delete_keywords = [
             "delete",
@@ -234,12 +414,12 @@ class IntentDetector:
                     reasoning=(
                         f"Matched keyword '{keyword}' "
                         f"for intent {IntentType.DELETE_FILE.value}."
-                    )
+                    ),
                 )
 
-        # ------------------------------------------------------------------
-        # File Movement
-        # ------------------------------------------------------------------
+        # =====================================================================
+        # 16. FILE - MOVE
+        # =====================================================================
 
         move_keywords = [
             "move",
@@ -257,12 +437,12 @@ class IntentDetector:
                     reasoning=(
                         f"Matched keyword '{keyword}' "
                         f"for intent {IntentType.MOVE_FILE.value}."
-                    )
+                    ),
                 )
 
-        # ------------------------------------------------------------------
-        # File Copy
-        # ------------------------------------------------------------------
+        # =====================================================================
+        # 17. FILE - COPY
+        # =====================================================================
 
         copy_keywords = [
             "copy",
@@ -280,12 +460,12 @@ class IntentDetector:
                     reasoning=(
                         f"Matched keyword '{keyword}' "
                         f"for intent {IntentType.COPY_FILE.value}."
-                    )
+                    ),
                 )
 
-        # ------------------------------------------------------------------
-        # File Rename
-        # ------------------------------------------------------------------
+        # =====================================================================
+        # 18. FILE - RENAME
+        # =====================================================================
 
         rename_keywords = [
             "rename",
@@ -303,12 +483,12 @@ class IntentDetector:
                     reasoning=(
                         f"Matched keyword '{keyword}' "
                         f"for intent {IntentType.RENAME_FILE.value}."
-                    )
+                    ),
                 )
 
-        # ------------------------------------------------------------------
-        # Application Opening
-        # ------------------------------------------------------------------
+        # =====================================================================
+        # 19. APPLICATION OPENING
+        # =====================================================================
 
         application_keywords = [
             "open",
@@ -329,16 +509,16 @@ class IntentDetector:
                         f"Matched keyword '{keyword}' "
                         f"for intent "
                         f"{IntentType.OPEN_APPLICATION.value}."
-                    )
+                    ),
                 )
 
-        # ------------------------------------------------------------------
-        # Unknown Intent
-        # ------------------------------------------------------------------
+        # =====================================================================
+        # 20. UNKNOWN
+        # =====================================================================
 
         return IntentResult(
             intent=IntentType.UNKNOWN,
             confidence=0.0,
             detection_method="rule_based",
-            reasoning="No matching intent pattern was found."
+            reasoning="No matching intent pattern was found.",
         )

@@ -14,7 +14,7 @@ the Agent Brain.
 Author : Team JARVIS
 ===============================================================================
 """
-
+'''
 # =============================================================================
 # Test Case 1
 # =============================================================================
@@ -36,7 +36,7 @@ SPRING_AI_CASE = {
         "Summarize the downloaded PDF"
     ]
 }
-'''
+
 # =============================================================================
 # Test Case 2
 # =============================================================================
@@ -95,10 +95,36 @@ PRESENTATION_CASE = {
         "Prepare a five-minute presentation script"
     ]
 }'''
+# =============================================================================
+# Test Case 4 - Current Real Automation Demo
+# =============================================================================
+
+REAL_AUTOMATION_DEMO_CASE = {
+    "goal": (
+        "Open Chrome, search for a JARVIS project resource, interact with "
+        "the browser using keyboard and mouse actions, and complete the "
+        "demonstration workflow."
+    ),
+    "summary": (
+        "Open Chrome, search for a JARVIS project resource, navigate to the "
+        "search results, interact with the browser using keyboard and mouse "
+        "input, and complete the requested workflow."
+    ),
+    "missing_information": [],
+    "tasks": [
+        "Open Chrome",
+        "Search for JARVIS agentic AI automation",
+        "Navigate to the search results",
+        "Click on a relevant search result",
+        "Scroll down the page",
+        "Click on another visible page element",
+        "Return to the search results",
+        "Use the keyboard to search for JARVIS automation",
+    ]
+}
 
 # =============================================================================
 # All Test Cases
 # =============================================================================
 
-ALL_CASES = [
-    SPRING_AI_CASE]
+ALL_CASES = [REAL_AUTOMATION_DEMO_CASE]

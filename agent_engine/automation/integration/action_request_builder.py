@@ -134,22 +134,37 @@ class ActionRequestBuilder:
             "search",
             "download",
             "close",
+            "go_back",
+            "go_forward",
+            "refresh",
+            "get_page_title",
+            "get_current_url",
+            "get_text",
+            "extract_text",
+            "new_tab",
+            "switch_tab",
+            "close_tab",
         }:
             return ActionCategory.BROWSER
 
         if normalized_action in {
-            "click",
+            "click_element",
             "type_text",
             "press_key",
         }:
             return ActionCategory.KEYBOARD
-
+        
         if normalized_action in {
             "move_mouse",
-            "click_mouse",
+            "click",
+            "double_click",
+            "right_click",
+            "mouse_down",
+            "mouse_up",
+            "scroll",
         }:
             return ActionCategory.MOUSE
-
+        
         if normalized_action in {
             "take_screenshot",
             "capture_screen",

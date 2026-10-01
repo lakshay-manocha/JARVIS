@@ -103,6 +103,21 @@ def test_tool_is_resolved(
 
     assert result.tool == ToolType.BROWSER
 
+def test_mouse_tool_is_resolved(
+    builder,
+):
+    """Mouse tool should resolve to ToolType.MOUSE."""
+
+    task = InterpretedTask(
+        task_id=1,
+        original_text="Move mouse",
+        normalized_text="move mouse",
+        action="move_mouse",
+        tool="mouse_agent",
+    )
+    result = builder.build(task)
+
+    assert result.tool == ToolType.MOUSE
 
 def test_browser_action_category_is_resolved(
     builder,
@@ -225,16 +240,34 @@ def test_invalid_task_type_is_rejected(
 @pytest.mark.parametrize(
     ("action", "expected_category"),
     [
+        # Browser
         ("open_url", ActionCategory.BROWSER),
         ("search", ActionCategory.BROWSER),
-        ("click", ActionCategory.KEYBOARD),
+
+        # Keyboard
         ("type_text", ActionCategory.KEYBOARD),
+        ("press_key", ActionCategory.KEYBOARD),
+
+        # Mouse
         ("move_mouse", ActionCategory.MOUSE),
+        ("click", ActionCategory.MOUSE),
+        ("double_click", ActionCategory.MOUSE),
+        ("right_click", ActionCategory.MOUSE),
+        ("mouse_down", ActionCategory.MOUSE),
+        ("mouse_up", ActionCategory.MOUSE),
+        ("scroll", ActionCategory.MOUSE),
+
+        # Screen
         ("take_screenshot", ActionCategory.SCREEN),
+
+        # Filesystem
         ("delete", ActionCategory.FILESYSTEM),
+
+        # Application fallback
         ("open_application", ActionCategory.APPLICATION),
     ],
 )
+
 def test_action_category_mapping(
     builder,
     action,
@@ -253,3 +286,41 @@ def test_action_category_mapping(
     result = builder.build(task)
 
     assert result.category == expected_category
+
+def test_mouse_action_request_is_built_correctly(
+    builder,
+):
+    """Mouse task should be converted into a valid mouse ActionRequest."""
+
+    task = InterpretedTask(
+        task_id=10,
+        original_text="Move mouse to 500, 300",
+        normalized_text="move mouse to 500, 300",
+        action="move_mouse",
+        tool="mouse_agent",
+        parameters={
+            "x": 500,
+            "y": 300,
+        },
+        metadata={
+            "source": "m5_j",
+        },
+    )
+
+    result = builder.build(task)
+
+    assert isinstance(result, ActionRequest)
+
+    assert result.task_id == 10
+    assert result.action == "move_mouse"
+    assert result.category == ActionCategory.MOUSE
+    assert result.tool == ToolType.MOUSE
+
+    assert result.parameters == {
+        "x": 500,
+        "y": 300,
+    }
+
+    assert result.metadata == {
+        "source": "m5_j",
+    }

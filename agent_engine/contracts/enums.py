@@ -210,6 +210,18 @@ class IntentType(str, Enum):
 
     RENAME_FILE = "RENAME_FILE"
 
+    TYPE_TEXT = "TYPE_TEXT"
+    PRESS_KEY = "PRESS_KEY"
+    HOTKEY = "HOTKEY"
+
+    MOVE_MOUSE = "MOVE_MOUSE"
+    MOUSE_CLICK = "MOUSE_CLICK"
+    MOUSE_DOUBLE_CLICK = "MOUSE_DOUBLE_CLICK"
+    MOUSE_RIGHT_CLICK = "MOUSE_RIGHT_CLICK"
+    MOUSE_DOWN = "MOUSE_DOWN"
+    MOUSE_UP = "MOUSE_UP"
+    MOUSE_SCROLL = "MOUSE_SCROLL"
+
     UNKNOWN = "UNKNOWN"
 
 # =============================================================================

@@ -205,7 +205,48 @@ class ParameterResolver:
         if filetype:
             parameters["filetype"] = filetype
 
+        # --------------------------------------------------------------
+        # Keyboard Parameters
+        # --------------------------------------------------------------
+
+        text_value = self._extract_text_parameter(text)
+
+        if text_value is not None:
+            parameters["text"] = text_value
+
+        key = self._extract_key_parameter(text)
+
+        if key is not None:
+            parameters["key"] = key
+
+        hotkey = self._extract_hotkey_parameter(text)
+
+        if hotkey is not None:
+            parameters["hotkey"] = hotkey
+
+        # --------------------------------------------------------------
+        # Mouse Parameters
+        # --------------------------------------------------------------
+
+        coordinates = self._extract_mouse_coordinates(text)
+
+        if coordinates is not None:
+            parameters["x"] = coordinates["x"]
+            parameters["y"] = coordinates["y"]
+
+        mouse_button = self._extract_mouse_button(text)
+
+        if mouse_button is not None:
+            parameters["button"] = mouse_button
+
+        scroll_values = self._extract_scroll_parameters(text)
+
+        if scroll_values is not None:
+            parameters.update(scroll_values)
+
         return parameters
+
+        
 
     # ------------------------------------------------------------------
     # URL Extraction
@@ -402,3 +443,298 @@ class ParameterResolver:
                 )
 
         return None
+
+    # ------------------------------------------------------------------
+    # Keyboard - Text
+    # ------------------------------------------------------------------
+
+    def _extract_text_parameter(
+        self,
+        text: str,
+    ) -> str | None:
+        """
+        Extract text that should be typed by the keyboard agent.
+
+        Examples
+        --------
+        "type Hello World"
+            -> "Hello World"
+
+        "write Python is powerful"
+            -> "Python is powerful"
+
+        "enter text JARVIS"
+            -> "JARVIS"
+        """
+
+        normalized_text = text.strip()
+
+        prefixes = (
+            "type ",
+            "write ",
+            "enter text ",
+        )
+
+        lowered_text = normalized_text.lower()
+
+        for prefix in prefixes:
+
+            if lowered_text.startswith(prefix):
+
+                value = normalized_text[
+                    len(prefix):
+                ].strip()
+
+                if value:
+                    return value
+
+        return None
+
+    # ------------------------------------------------------------------
+    # Keyboard - Key
+    # ------------------------------------------------------------------
+
+    def _extract_key_parameter(
+        self,
+        text: str,
+    ) -> str | None:
+        """
+        Extract a keyboard key from a press-key command.
+
+        Examples
+        --------
+        "press enter"
+            -> "enter"
+
+        "press escape"
+            -> "escape"
+
+        "hit tab"
+            -> "tab"
+        """
+
+        normalized_text = text.strip()
+
+        lowered_text = normalized_text.lower()
+
+        prefixes = (
+            "press ",
+            "hit ",
+        )
+
+        for prefix in prefixes:
+
+            if lowered_text.startswith(prefix):
+
+                key = normalized_text[
+                    len(prefix):
+                ].strip()
+
+                if key:
+                    return key.lower()
+
+        return None
+
+    # ------------------------------------------------------------------
+    # Keyboard - Hotkey
+    # ------------------------------------------------------------------
+
+    def _extract_hotkey_parameter(
+        self,
+        text: str,
+    ) -> list[str] | None:
+        """
+        Extract keyboard shortcut components.
+
+        Examples
+        --------
+        "hotkey ctrl c"
+            -> ["ctrl", "c"]
+
+        "shortcut ctrl shift s"
+            -> ["ctrl", "shift", "s"]
+        """
+
+        normalized_text = text.strip()
+
+        lowered_text = normalized_text.lower()
+
+        prefixes = (
+            "hotkey ",
+            "shortcut ",
+        )
+
+        for prefix in prefixes:
+
+            if lowered_text.startswith(prefix):
+
+                value = normalized_text[
+                    len(prefix):
+                ].strip()
+
+                if not value:
+                    return None
+
+                parts = re.split(
+                    r"\s*(?:\+|,|\s)\s*",
+                    value.lower(),
+                )
+
+                parts = [
+                    part.strip()
+                    for part in parts
+                    if part.strip()
+                ]
+
+                return parts if parts else None
+
+        return None
+
+    # ------------------------------------------------------------------
+    # Mouse - Coordinates
+    # ------------------------------------------------------------------
+
+    def _extract_mouse_coordinates(
+        self,
+        text: str,
+    ) -> dict[str, int] | None:
+        """
+        Extract mouse coordinates from a task.
+
+        Examples
+        --------
+        "move mouse to 500 300"
+            -> {"x": 500, "y": 300}
+
+        "move cursor to 100, 200"
+            -> {"x": 100, "y": 200}
+        """
+
+        pattern = re.compile(
+            r"(?:move mouse|move cursor)"
+            r".*?"
+            r"(-?\d+(?:\.\d+)?)"
+            r"\s*(?:,|to)?\s*"
+            r"(-?\d+(?:\.\d+)?)",
+            re.IGNORECASE,
+        )
+
+        match = pattern.search(text)
+
+        if not match:
+            return None
+
+        x = float(match.group(1))
+        y = float(match.group(2))
+
+        if x.is_integer():
+            x = int(x)
+
+        if y.is_integer():
+            y = int(y)
+
+        return {
+            "x": x,
+            "y": y,
+        }
+
+    # ------------------------------------------------------------------
+    # Mouse - Button
+    # ------------------------------------------------------------------
+
+    def _extract_mouse_button(
+        self,
+        text: str,
+    ) -> str | None:
+        """
+        Extract mouse button from the task.
+
+        Examples
+        --------
+        "click"
+            -> "left"
+
+        "left click"
+            -> "left"
+
+        "right click"
+            -> "right"
+
+        "middle click"
+            -> "middle"
+        """
+
+        normalized_text = text.lower().strip()
+
+        if "right click" in normalized_text:
+            return "right"
+
+        if "middle click" in normalized_text:
+            return "middle"
+
+        if "left click" in normalized_text:
+            return "left"
+
+        if normalized_text == "click":
+            return "left"
+
+        return None
+
+    # ------------------------------------------------------------------
+    # Mouse - Scroll
+    # ------------------------------------------------------------------
+
+    def _extract_scroll_parameters(
+        self,
+        text: str,
+    ) -> dict[str, int] | None:
+        """
+        Extract scroll direction and amount.
+
+        Examples
+        --------
+        "scroll down"
+            -> {"dx": 0, "dy": -1}
+
+        "scroll up"
+            -> {"dx": 0, "dy": 1}
+
+        "scroll down 5"
+            -> {"dx": 0, "dy": -5}
+        """
+
+        normalized_text = text.lower().strip()
+
+        if "scroll" not in normalized_text:
+            return None
+
+        amount_match = re.search(
+            r"(-?\d+)",
+            normalized_text,
+        )
+
+        amount = 1
+
+        if amount_match:
+            amount = abs(
+                int(amount_match.group(1))
+            )
+
+        if "down" in normalized_text:
+            return {
+                "dx": 0,
+                "dy": -amount,
+            }
+
+        if "up" in normalized_text:
+            return {
+                "dx": 0,
+                "dy": amount,
+            }
+
+        return {
+            "dx": 0,
+            "dy": 0,
+        }
+
+    

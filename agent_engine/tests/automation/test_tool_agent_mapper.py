@@ -13,6 +13,9 @@ from agent_engine.automation.registry.agent_registry import AgentRegistry
 from agent_engine.automation.registry.tool_agent_mapper import ToolAgentMapper
 from agent_engine.contracts.action import ActionRequest
 from agent_engine.contracts.enums import ToolType
+from agent_engine.automation.agents.mouse.mouse_agent import (
+    MouseAutomationAgent,
+)
 
 
 class TestMapperAgent(AutomationAgent):
@@ -314,3 +317,84 @@ def test_mapper_and_registry_share_same_agent_instance(
 
     assert registry.get("browser_agent") is agent
     assert mapper.resolve(ToolType.BROWSER) is registry.get("browser_agent")
+
+# =============================================================================
+# Mouse Agent Integration
+# =============================================================================
+
+
+def test_mouse_agent_can_be_mapped() -> None:
+    """
+    MouseAutomationAgent must be registerable through ToolAgentMapper.
+    """
+
+    registry = AgentRegistry()
+    mapper = ToolAgentMapper(registry)
+
+    mouse_agent = MouseAutomationAgent()
+
+    mapper.register(
+        ToolType.MOUSE,
+        mouse_agent,
+    )
+
+    assert mapper.contains(
+        ToolType.MOUSE,
+    )
+
+    assert registry.contains(
+        "mouse_agent",
+    )
+
+def test_mouse_tool_resolves_to_mouse_agent() -> None:
+    """
+    ToolType.MOUSE must resolve to the registered MouseAutomationAgent.
+    """
+
+    registry = AgentRegistry()
+    mapper = ToolAgentMapper(registry)
+
+    mouse_agent = MouseAutomationAgent()
+
+    mapper.register(
+        ToolType.MOUSE,
+        mouse_agent,
+    )
+
+    resolved = mapper.resolve(
+        ToolType.MOUSE,
+    )
+
+    assert resolved is mouse_agent
+
+    assert resolved.tool_type == ToolType.MOUSE
+
+    assert resolved.agent_id == "mouse_agent"
+
+def test_mouse_mapper_and_registry_share_same_agent() -> None:
+    """
+    ToolAgentMapper and AgentRegistry must reference the same
+    MouseAutomationAgent instance.
+    """
+
+    registry = AgentRegistry()
+    mapper = ToolAgentMapper(registry)
+
+    mouse_agent = MouseAutomationAgent()
+
+    mapper.register(
+        ToolType.MOUSE,
+        mouse_agent,
+    )
+
+    registered = registry.get(
+        "mouse_agent",
+    )
+
+    resolved = mapper.resolve(
+        ToolType.MOUSE,
+    )
+
+    assert registered is mouse_agent
+    assert resolved is mouse_agent
+    assert resolved is registered

@@ -36,6 +36,54 @@ class ToolResolver:
     Resolves the automation tool required for each interpreted task.
     """
 
+    # ------------------------------------------------------------------
+    # Canonical Action → Tool Mapping
+    # ------------------------------------------------------------------
+
+    _ACTION_TOOL_MAP = {
+
+        # --------------------------------------------------------------
+        # Browser Automation
+        # --------------------------------------------------------------
+
+        "search": ToolType.BROWSER.value,
+        "download": ToolType.BROWSER.value,
+
+        # --------------------------------------------------------------
+        # Filesystem Automation
+        # --------------------------------------------------------------
+
+        "delete": ToolType.FILESYSTEM.value,
+        "move": ToolType.FILESYSTEM.value,
+        "copy": ToolType.FILESYSTEM.value,
+        "rename": ToolType.FILESYSTEM.value,
+        "summarize": ToolType.FILESYSTEM.value,
+
+        # --------------------------------------------------------------
+        # Keyboard Automation
+        # --------------------------------------------------------------
+
+        "type": ToolType.KEYBOARD.value,
+        "press": ToolType.KEYBOARD.value,
+        "hotkey": ToolType.KEYBOARD.value,
+
+        # --------------------------------------------------------------
+        # Mouse Automation
+        # --------------------------------------------------------------
+
+        "move_mouse": ToolType.MOUSE.value,
+        "mouse_click": ToolType.MOUSE.value,
+        "mouse_double_click": ToolType.MOUSE.value,
+        "mouse_right_click": ToolType.MOUSE.value,
+        "mouse_down": ToolType.MOUSE.value,
+        "mouse_up": ToolType.MOUSE.value,
+        "mouse_scroll": ToolType.MOUSE.value,
+    }
+
+    # ------------------------------------------------------------------
+    # Public API
+    # ------------------------------------------------------------------
+
     def resolve(
         self,
         context: ProcessingContext
@@ -46,15 +94,20 @@ class ToolResolver:
         Parameters
         ----------
         context : ProcessingContext
+            Current Agent Brain processing context.
 
         Returns
         -------
         ProcessingContext
+            Updated processing context containing resolved tools.
         """
 
         context.current_stage = ProcessingStage.TOOL_RESOLUTION
 
         context.log("Tool resolution started.")
+
+        resolved_count = 0
+        unresolved_count = 0
 
         for task in context.interpreted_tasks:
 
@@ -63,14 +116,29 @@ class ToolResolver:
                 task.parameters
             )
 
-            context.log(
-                f"Tool resolved for Task {task.task_id}: "
-                f"{task.tool}"
-            )
+            if task.tool is not None:
+
+                resolved_count += 1
+
+                context.log(
+                    f"Tool resolved for Task "
+                    f"{task.task_id}: {task.tool}"
+                )
+
+            else:
+
+                unresolved_count += 1
+
+                context.log(
+                    f"Tool resolution failed for Task "
+                    f"{task.task_id}: unsupported action "
+                    f"{task.action}"
+                )
 
         context.log(
-            f"Tool resolution completed for "
-            f"{len(context.interpreted_tasks)} task(s)."
+            f"Tool resolution completed. "
+            f"Resolved: {resolved_count}, "
+            f"Unresolved: {unresolved_count}"
         )
 
         return context
@@ -79,69 +147,86 @@ class ToolResolver:
     # Tool Resolution
     # ------------------------------------------------------------------
 
+    @classmethod
     def _resolve_tool(
-        self,
+        cls,
         action: str | None,
         parameters: dict
     ) -> str | None:
         """
-        Resolves the automation tool based on action and parameters.
+        Resolve the automation tool based on canonical action and parameters.
+
+        Parameters
+        ----------
+        action : str | None
+            Canonical action resolved by ActionResolver.
+
+        parameters : dict
+            Structured parameters resolved by ParameterResolver.
+
+        Returns
+        -------
+        str | None
+            ToolType value required to execute the action.
         """
 
         if action is None:
             return None
 
         # --------------------------------------------------------------
-        # Browser Automation
+        # Normalize action
         # --------------------------------------------------------------
 
-        if action in {
-
-            "search",
-            "download"
-
-        }:
-            return ToolType.BROWSER.value
+        action = action.strip().lower()
 
         # --------------------------------------------------------------
-        # Desktop Automation
+        # Browser / Filesystem / Keyboard / Mouse
+        # --------------------------------------------------------------
+
+        if action in cls._ACTION_TOOL_MAP:
+            return cls._ACTION_TOOL_MAP[action]
+
+        # --------------------------------------------------------------
+        # Open Application / Website
+        # --------------------------------------------------------------
+        #
+        # "open" is context-dependent:
+        #
+        #   open Chrome       → desktop_agent
+        #   open Notepad      → desktop_agent
+        #   open google.com   → browser_agent
+        #   open URL          → browser_agent
+        #
+        # Therefore, unlike the other actions, "open" cannot be resolved
+        # from the action alone.
         # --------------------------------------------------------------
 
         if action == "open":
 
+            # Website / URL takes priority because an explicit website
+            # target should be handled by the browser agent.
+
             if (
-                "browser" in parameters
-                or
-                "application" in parameters
+                "url" in parameters
+                or "website" in parameters
             ):
-
-                return ToolType.DESKTOP.value
-
-            if "website" in parameters:
-
                 return ToolType.BROWSER.value
 
-        # --------------------------------------------------------------
-        # Filesystem Automation
-        # --------------------------------------------------------------
+            # Applications and browsers installed on the system are
+            # launched through the desktop agent.
 
-        if action in {
+            if (
+                "application" in parameters
+                or "browser" in parameters
+            ):
+                return ToolType.DESKTOP.value
 
-            "delete",
-            "move",
-            "copy",
-            "rename"
+            # No sufficient information to determine the controller.
 
-        }:
-
-            return ToolType.FILESYSTEM.value
+            return None
 
         # --------------------------------------------------------------
-        # Summarization
+        # Unsupported Action
         # --------------------------------------------------------------
-
-        if action == "summarize":
-
-            return ToolType.FILESYSTEM.value
 
         return None
