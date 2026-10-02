@@ -1,516 +1,510 @@
-"""
-===============================================================================
-File Name   : screen_aware.py
-Module      : JARVIS Perception - Screen Awareness
-Project     : JARVIS - Agent Decision Engine & Automation Engine
-
-Description:
--------------
-Context-aware desktop screen perception.
-
-Pipeline:
-
-    Query
-      ↓
-    Screenshot
-      ↓
-    EasyOCR
-      │
-      ├── Found → coordinates
-      │
-      └── Not Found
-              ↓
-          Qwen2-VL
-              ↓
-          coordinates
-
-The Qwen2-VL model is loaded ONCE and reused for all future requests.
-===============================================================================
-"""
-
 from __future__ import annotations
 
-import threading
-from time import perf_counter
-from typing import Any
+import time
+from typing import Any, Protocol
 
-import numpy as np
-import torch
-from PIL import ImageGrab
+from ...automation.agents.screen.screen_backend import (
+    ScreenBackend,
+    WindowsScreenBackend,
+)
 
-import easyocr
 
-from .grounding_model import ScreenGroundingModel
+class OCRProvider(Protocol):
+
+    def readtext(self, image: Any) -> list[Any]:
+        ...
+
+
+class GroundingProvider(Protocol):
+
+    def locate(
+        self,
+        image: Any,
+        query: str,
+    ) -> Any:
+        ...
+
+    def detect_visible_elements(
+        self,
+        image: Any,
+    ) -> Any:
+        ...
 
 
 class ScreenAware:
     """
-    Persistent screen perception engine.
+    Screen perception layer.
 
-    One instance owns:
-        - EasyOCR model
-        - Qwen2-VL model
+    Responsibilities:
+        - screen capture through backend
+        - OCR
+        - text matching
+        - visual grounding
+        - visible element detection
+        - coordinate validation
 
-    The expensive models are initialized only once.
+    Non-responsibilities:
+        - mouse
+        - keyboard
+        - planning
+        - decision making
     """
 
     def __init__(
         self,
-        *,
-        use_vlm: bool = True,
-        use_ocr: bool = True,
+        backend: ScreenBackend | None = None,
+        ocr: OCRProvider | None = None,
+        grounding_model: GroundingProvider | None = None,
     ) -> None:
 
-        self.use_vlm = use_vlm
-        self.use_ocr = use_ocr
+        self.backend = backend or WindowsScreenBackend()
 
-        self._initialized = False
-        self._initialization_lock = threading.Lock()
+        self._ocr = ocr
+        self._grounding_model = grounding_model
 
-        self._ocr = None
-        self._vlm = None
+    # ------------------------------------------------------------------
+    # Lightweight screen operations
+    # ------------------------------------------------------------------
 
-        self._stats = {
-            "screenshots": 0,
-            "ocr_requests": 0,
-            "vlm_requests": 0,
-            "ocr_hits": 0,
-            "vlm_hits": 0,
-            "misses": 0,
-        }
-
-    # =========================================================================
-    # Initialization
-    # =========================================================================
-
-    def initialize(self) -> None:
-        """
-        Initialize perception models exactly once.
-
-        Safe to call repeatedly.
-        """
-
-        if self._initialized:
-            return
-
-        with self._initialization_lock:
-
-            if self._initialized:
-                return
-
-            print()
-            print("=" * 70)
-            print("JARVIS SCREEN AWARENESS INITIALIZATION")
-            print("=" * 70)
-
-            print(
-                f"[SCREEN] CUDA available: "
-                f"{torch.cuda.is_available()}"
-            )
-
-            if torch.cuda.is_available():
-                print(
-                    f"[SCREEN] GPU: "
-                    f"{torch.cuda.get_device_name(0)}"
-                )
-
-            # -----------------------------------------------------------------
-            # OCR
-            # -----------------------------------------------------------------
-
-            if self.use_ocr:
-
-                print("[SCREEN] Loading EasyOCR...")
-
-                self._ocr = easyocr.Reader(
-                    ["en"],
-                    gpu=torch.cuda.is_available(),
-                    verbose=False,
-                )
-
-                print("[SCREEN] EasyOCR ready.")
-
-            # -----------------------------------------------------------------
-            # Vision-Language Model
-            # -----------------------------------------------------------------
-
-            if self.use_vlm:
-
-                print(
-                    "[SCREEN] Loading Qwen2-VL "
-                    "Screen Grounding Model..."
-                )
-
-                self._vlm = ScreenGroundingModel()
-
-                self._vlm.load()
-
-                print(
-                    "[SCREEN] Qwen2-VL loaded and "
-                    "ready for reuse."
-                )
-
-            self._initialized = True
-
-            print("[SCREEN] ScreenAware READY.")
-            print("=" * 70)
-            print()
-
-    # =========================================================================
-    # Screenshot
-    # =========================================================================
-
-    def screenshot(self):
-        """
-        Capture the current desktop.
-
-        Returns:
-            PIL.Image.Image
-        """
-
-        image = ImageGrab.grab()
-
-        if image.mode != "RGB":
-            image = image.convert("RGB")
-
-        self._stats["screenshots"] += 1
-
-        return image
-
-    # =========================================================================
-    # OCR
-    # =========================================================================
-
-    def _find_with_ocr(
+    def capture_screen(
         self,
-        image,
-        query: str,
-    ) -> dict[str, Any] | None:
+        monitor: int | None = None,
+        all_screens: bool = False,
+    ) -> dict[str, Any]:
 
-        if self._ocr is None:
-            return None
-
-        self._stats["ocr_requests"] += 1
-
-        query_clean = query.lower().strip()
-
-        if not query_clean:
-            return None
-
-        results = self._ocr.readtext(
-            np.array(image)
+        result = self.backend.capture_screen(
+            monitor=monitor,
+            all_screens=all_screens,
         )
 
-        for box, text, confidence in results:
+        return {
+            "success": True,
+            "image": result.image,
+            "width": result.width,
+            "height": result.height,
+            "monitor": result.monitor,
+            "timestamp": result.timestamp,
+        }
 
-            detected_text = text.strip()
+    def capture_region(
+        self,
+        x: int,
+        y: int,
+        width: int,
+        height: int,
+    ) -> dict[str, Any]:
 
-            if not detected_text:
-                continue
+        return self.backend.capture_region(
+            x=x,
+            y=y,
+            width=width,
+            height=height,
+        )
 
-            detected_lower = detected_text.lower()
+    def get_screen_size(
+        self,
+        monitor: int | None = None,
+    ) -> dict[str, int]:
 
-            # -------------------------------------------------------------
-            # Matching strategy
-            # -------------------------------------------------------------
+        return self.backend.get_screen_size(
+            monitor=monitor
+        )
 
-            matched = (
-                query_clean == detected_lower
-                or query_clean in detected_lower
-                or detected_lower in query_clean
+    # ------------------------------------------------------------------
+    # OCR
+    # ------------------------------------------------------------------
+
+    def _get_ocr(self) -> OCRProvider:
+
+        if self._ocr is None:
+            import easyocr
+
+            self._ocr = easyocr.Reader(
+                ["en"],
+                gpu=True,
             )
 
-            if not matched:
+        return self._ocr
+
+    def locate_text(
+        self,
+        text: str,
+        case_sensitive: bool = False,
+    ) -> dict[str, Any]:
+
+        if not text or not text.strip():
+            raise ValueError("text must not be empty")
+
+        start = time.perf_counter()
+
+        capture = self.capture_screen()
+
+        image = capture["image"]
+
+        ocr = self._get_ocr()
+
+        results = ocr.readtext(image)
+
+        target = text if case_sensitive else text.lower()
+
+        for result in results:
+
+            if len(result) < 3:
                 continue
 
-            # -------------------------------------------------------------
-            # Bounding box
-            # -------------------------------------------------------------
+            polygon = result[0]
+            detected_text = str(result[1])
+            confidence = float(result[2])
 
-            xs = [
-                int(point[0])
-                for point in box
-            ]
+            comparison = (
+                detected_text
+                if case_sensitive
+                else detected_text.lower()
+            )
 
-            ys = [
-                int(point[1])
-                for point in box
-            ]
+            if target not in comparison:
+                continue
 
-            x1 = min(xs)
-            y1 = min(ys)
-            x2 = max(xs)
-            y2 = max(ys)
+            bbox = self._polygon_to_bbox(polygon)
 
-            center_x = (x1 + x2) // 2
-            center_y = (y1 + y2) // 2
+            self._validate_bbox(
+                bbox,
+                capture["width"],
+                capture["height"],
+            )
 
-            self._stats["ocr_hits"] += 1
+            center = self._bbox_center(bbox)
 
             return {
                 "found": True,
-                "query": query,
                 "text": detected_text,
-                "x": center_x,
-                "y": center_y,
-                "coordinates": {
-                    "x": center_x,
-                    "y": center_y,
-                },
-                "bbox": [
-                    x1,
-                    y1,
-                    x2,
-                    y2,
-                ],
-                "confidence": float(confidence),
-                "method": "OCR",
+                "bbox": bbox,
+                "center": center,
+                "coordinates": center,
+                "confidence": confidence,
+                "method": "ocr",
+                "latency_ms": self._latency(start),
             }
 
-        return None
+        return {
+            "found": False,
+            "text": text,
+            "coordinates": None,
+            "center": None,
+            "bbox": None,
+            "confidence": None,
+            "method": "ocr",
+            "latency_ms": self._latency(start),
+        }
 
-    # =========================================================================
-    # Qwen2-VL
-    # =========================================================================
+    # ------------------------------------------------------------------
+    # Visual grounding
+    # ------------------------------------------------------------------
 
-    def _find_with_vlm(
+    def _get_grounding_model(self) -> GroundingProvider:
+
+        if self._grounding_model is None:
+
+            from .grounding_model import ScreenGroundingModel
+
+            self._grounding_model = ScreenGroundingModel()
+
+        return self._grounding_model
+
+    def locate_element(
         self,
-        image,
         query: str,
-    ) -> dict[str, Any] | None:
+    ) -> dict[str, Any]:
 
-        if self._vlm is None:
-            return None
+        if not query or not query.strip():
+            raise ValueError("query must not be empty")
 
-        self._stats["vlm_requests"] += 1
+        start = time.perf_counter()
 
-        # The current grounding_model implementation already handles
-        # Qwen2-VL inference and coordinate extraction.
+        capture = self.capture_screen()
 
-        result = self._vlm.locate(
+        image = capture["image"]
+
+        model = self._get_grounding_model()
+
+        raw_result = model.locate(
             image,
             query,
         )
 
-        if not result:
-            return None
-
-        if not result.get("found"):
-            return None
-
-        coordinates = result.get(
-            "coordinates",
-            {}
+        parsed = self._normalise_grounding_result(
+            raw_result,
+            capture["width"],
+            capture["height"],
         )
 
-        x = coordinates.get("x")
-        y = coordinates.get("y")
+        if parsed is None:
+            return {
+                "found": False,
+                "query": query,
+                "coordinates": None,
+                "center": None,
+                "bbox": None,
+                "confidence": None,
+                "method": "vlm",
+                "latency_ms": self._latency(start),
+            }
 
-        if x is None or y is None:
-            return None
-
-        self._stats["vlm_hits"] += 1
+        bbox = parsed["bbox"]
 
         return {
             "found": True,
             "query": query,
-            "text": query,
-            "x": int(x),
-            "y": int(y),
-            "coordinates": {
-                "x": int(x),
-                "y": int(y),
-            },
-            "bbox": result.get("bbox"),
-            "confidence": result.get(
-                "confidence",
-                0.0,
-            ),
-            "method": "Qwen2-VL",
+            "coordinates": self._bbox_center(bbox),
+            "center": self._bbox_center(bbox),
+            "bbox": bbox,
+            "confidence": parsed.get("confidence"),
+            "method": "vlm",
+            "latency_ms": self._latency(start),
         }
 
-    # =========================================================================
-    # Public Locate API
-    # =========================================================================
+    # ------------------------------------------------------------------
+    # Visible elements
+    # ------------------------------------------------------------------
 
-    def find(
-        self,
-        query: str,
-    ) -> dict[str, Any]:
+    def detect_visible_elements(self) -> list[dict[str, Any]]:
 
-        start_time = perf_counter()
+        start = time.perf_counter()
 
-        if not isinstance(query, str):
-            raise TypeError(
-                "Screen query must be a string."
+        capture = self.capture_screen()
+
+        model = self._get_grounding_model()
+
+        if not hasattr(model, "detect_visible_elements"):
+            raise NotImplementedError(
+                "Grounding model does not support "
+                "detect_visible_elements()"
             )
 
-        query = query.strip()
+        raw_elements = model.detect_visible_elements(
+            capture["image"]
+        )
 
-        if not query:
-            raise ValueError(
-                "Screen query cannot be empty."
+        if raw_elements is None:
+            return []
+
+        elements: list[dict[str, Any]] = []
+
+        for element in raw_elements:
+
+            parsed = self._normalise_grounding_result(
+                element,
+                capture["width"],
+                capture["height"],
             )
 
-        self.initialize()
+            if parsed is None:
+                continue
 
-        image = self.screenshot()
+            bbox = parsed["bbox"]
 
-        # ---------------------------------------------------------------------
-        # FAST PATH: OCR
-        # ---------------------------------------------------------------------
-
-        if self.use_ocr:
-
-            result = self._find_with_ocr(
-                image,
-                query,
+            elements.append(
+                {
+                    "type": parsed.get("type", "unknown"),
+                    "text": parsed.get("text"),
+                    "bbox": bbox,
+                    "center": self._bbox_center(bbox),
+                    "confidence": parsed.get("confidence"),
+                    "method": parsed.get(
+                        "method",
+                        "vision",
+                    ),
+                    "latency_ms": self._latency(start),
+                }
             )
 
-            if result is not None:
+        return elements
 
-                result["latency"] = (
-                    perf_counter() - start_time
-                )
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
 
-                return result
+    @staticmethod
+    def _polygon_to_bbox(
+        polygon: Any,
+    ) -> dict[str, int]:
 
-        # ---------------------------------------------------------------------
-        # FALLBACK: Qwen2-VL
-        # ---------------------------------------------------------------------
-
-        if self.use_vlm:
-
-            result = self._find_with_vlm(
-                image,
-                query,
-            )
-
-            if result is not None:
-
-                result["latency"] = (
-                    perf_counter() - start_time
-                )
-
-                return result
-
-        # ---------------------------------------------------------------------
-        # NOT FOUND
-        # ---------------------------------------------------------------------
-
-        self._stats["misses"] += 1
+        xs = [int(point[0]) for point in polygon]
+        ys = [int(point[1]) for point in polygon]
 
         return {
-            "found": False,
-            "query": query,
-            "text": None,
-            "x": None,
-            "y": None,
-            "coordinates": None,
-            "bbox": None,
-            "confidence": 0.0,
-            "method": None,
-            "latency": (
-                perf_counter() - start_time
-            ),
+            "x1": min(xs),
+            "y1": min(ys),
+            "x2": max(xs),
+            "y2": max(ys),
         }
 
-    # =========================================================================
-    # Convenience API
-    # =========================================================================
+    @staticmethod
+    def _bbox_center(
+        bbox: dict[str, int],
+    ) -> dict[str, int]:
 
-    def locate(
-        self,
-        query: str,
-    ) -> dict[str, Any]:
-        """
-        Alias for find().
-        """
+        return {
+            "x": (bbox["x1"] + bbox["x2"]) // 2,
+            "y": (bbox["y1"] + bbox["y2"]) // 2,
+        }
 
-        return self.find(query)
+    @staticmethod
+    def _validate_bbox(
+        bbox: dict[str, int],
+        screen_width: int,
+        screen_height: int,
+    ) -> None:
 
-    # =========================================================================
-    # Warmup
-    # =========================================================================
+        x1 = bbox["x1"]
+        y1 = bbox["y1"]
+        x2 = bbox["x2"]
+        y2 = bbox["y2"]
 
-    def warmup(self) -> None:
-        """
-        Explicitly load all models before JARVIS begins normal operation.
+        if x1 < 0 or y1 < 0:
+            raise ValueError("Bounding box contains negative coordinates")
 
-        This is optional.
+        if x2 < x1 or y2 < y1:
+            raise ValueError("Bounding box coordinates are reversed")
 
-        If not called, initialization happens lazily during the first
-        screen request.
-        """
+        if x2 > screen_width:
+            raise ValueError("Bounding box exceeds screen width")
 
-        self.initialize()
+        if y2 > screen_height:
+            raise ValueError("Bounding box exceeds screen height")
 
-    # =========================================================================
-    # Diagnostics
-    # =========================================================================
+    @classmethod
+    def _normalise_grounding_result(
+        cls,
+        result: Any,
+        screen_width: int,
+        screen_height: int,
+    ) -> dict[str, Any] | None:
 
-    @property
-    def stats(self) -> dict[str, int]:
-        """
-        Return perception statistics.
-        """
+        if result is None:
+            return None
 
-        return dict(self._stats)
+        if isinstance(result, dict):
 
-    @property
-    def ready(self) -> bool:
-        """
-        Return whether ScreenAware has been initialized.
-        """
+            bbox = result.get("bbox")
 
-        return self._initialized
+            if bbox is None:
+                return None
 
-    # =========================================================================
-    # Cleanup
-    # =========================================================================
+            bbox = cls._normalise_bbox(
+                bbox,
+                screen_width,
+                screen_height,
+            )
 
-    def cleanup(self) -> None:
-        """
-        Release screen perception models.
+            cls._validate_bbox(
+                bbox,
+                screen_width,
+                screen_height,
+            )
 
-        Normally called only when shutting down JARVIS.
-        """
+            return {
+                **result,
+                "bbox": bbox,
+            }
 
-        self._ocr = None
-        self._vlm = None
-        self._initialized = False
+        if isinstance(result, (list, tuple)) and len(result) == 4:
 
-        if torch.cuda.is_available():
-            torch.cuda.empty_cache()
+            bbox = cls._normalise_bbox(
+                result,
+                screen_width,
+                screen_height,
+            )
 
-        print("[SCREEN] ScreenAware cleaned up.")
+            cls._validate_bbox(
+                bbox,
+                screen_width,
+                screen_height,
+            )
+
+            return {
+                "bbox": bbox,
+                "confidence": None,
+                "method": "vlm",
+            }
+
+        return None
+
+    @staticmethod
+    def _normalise_bbox(
+        bbox: Any,
+        screen_width: int,
+        screen_height: int,
+    ) -> dict[str, int]:
+
+        if isinstance(bbox, dict):
+
+            x1 = bbox["x1"]
+            y1 = bbox["y1"]
+            x2 = bbox["x2"]
+            y2 = bbox["y2"]
+
+        elif isinstance(bbox, (list, tuple)):
+
+            if len(bbox) != 4:
+                raise ValueError("Bounding box must contain four values")
+
+            x1, y1, x2, y2 = bbox
+
+        else:
+            raise ValueError("Unsupported bounding box format")
+
+        values = [
+            float(x1),
+            float(y1),
+            float(x2),
+            float(y2),
+        ]
+
+        # Explicit 0-1000 normalized coordinate handling.
+        if all(0 <= value <= 1000 for value in values):
+            if (
+                max(values) <= 1000
+                and (
+                    values[2] > screen_width
+                    or values[3] > screen_height
+                )
+            ):
+                x1 = int(values[0] * screen_width / 1000)
+                y1 = int(values[1] * screen_height / 1000)
+                x2 = int(values[2] * screen_width / 1000)
+                y2 = int(values[3] * screen_height / 1000)
+
+                return {
+                    "x1": x1,
+                    "y1": y1,
+                    "x2": x2,
+                    "y2": y2,
+                }
+
+        return {
+            "x1": int(x1),
+            "y1": int(y1),
+            "x2": int(x2),
+            "y2": int(y2),
+        }
+
+    @staticmethod
+    def _latency(start: float) -> float:
+        return round(
+            (time.perf_counter() - start) * 1000,
+            2,
+        )
 
 
-# =============================================================================
-# PROCESS-LEVEL SINGLETON
-# =============================================================================
-
-_screen_aware_instance: ScreenAware | None = None
-
-_screen_aware_lock = threading.Lock()
+_screen_aware: ScreenAware | None = None
 
 
 def get_screen_aware() -> ScreenAware:
-    """
-    Return the process-wide ScreenAware instance.
 
-    This is the key mechanism that prevents Qwen2-VL from being loaded
-    repeatedly for every JARVIS request.
-    """
+    global _screen_aware
 
-    global _screen_aware_instance
+    if _screen_aware is None:
+        _screen_aware = ScreenAware()
 
-    if _screen_aware_instance is None:
-
-        with _screen_aware_lock:
-
-            if _screen_aware_instance is None:
-
-                _screen_aware_instance = ScreenAware()
-
-    return _screen_aware_instance
+    return _screen_aware

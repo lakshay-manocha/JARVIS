@@ -1,32 +1,57 @@
 from __future__ import annotations
 
-from PIL import ImageGrab
+from typing import Any
+
+from ...automation.agents.screen.screen_backend import (
+    ScreenBackend,
+    WindowsScreenBackend,
+)
 
 
 class ScreenCapture:
     """
-    Captures the current desktop screen.
+    Compatibility facade for screen acquisition.
 
-    This class intentionally contains no OCR or AI logic.
+    Actual screen acquisition is delegated to ScreenBackend.
     """
 
-    def __init__(self, all_screens: bool = True):
-        self.all_screens = all_screens
+    def __init__(
+        self,
+        backend: ScreenBackend | None = None,
+    ) -> None:
 
-    def capture(self):
-        """
-        Capture the desktop and return a PIL RGB image.
-        """
+        self.backend = backend or WindowsScreenBackend()
 
-        image = ImageGrab.grab(
-            all_screens=self.all_screens
+    def capture(
+        self,
+        monitor: int | None = None,
+        all_screens: bool = False,
+    ):
+        return self.backend.capture_screen(
+            monitor=monitor,
+            all_screens=all_screens,
         )
 
-        if image.mode != "RGB":
-            image = image.convert("RGB")
+    def capture_region(
+        self,
+        x: int,
+        y: int,
+        width: int,
+        height: int,
+    ) -> dict[str, Any]:
 
-        return image
+        return self.backend.capture_region(
+            x=x,
+            y=y,
+            width=width,
+            height=height,
+        )
 
-    def size(self):
-        image = self.capture()
-        return image.size
+    def get_screen_size(
+        self,
+        monitor: int | None = None,
+    ) -> dict[str, int]:
+
+        return self.backend.get_screen_size(
+            monitor=monitor
+        )
