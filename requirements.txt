@@ -1,0 +1,23 @@
+# JARVIS Agent Brain / Decision Engine / Automation Engine
+# Recommended interpreter: Python 3.12.x on Windows.
+# Install from the project root with: python -m pip install -r requirements.txt
+
+# Core data models and validation
+pydantic>=2.7,<3.0
+
+# Test suite
+pytest>=8.0,<10.0
+
+# Numerical utilities used by ML/integration components
+numpy>=1.26,<3.0
+
+# Desktop input automation components
+pynput>=1.7.7,<2.0
+
+# Optional/model-backed integration components included in this repository
+# These can download large wheels and model assets may need separate setup.
+torch>=2.2,<3.0
+transformers>=4.40,<5.0
+
+# Browser automation integration tests (also install browser binaries separately)
+playwright>=1.40,<2.0

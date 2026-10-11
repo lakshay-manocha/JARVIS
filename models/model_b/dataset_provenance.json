@@ -1,0 +1,66 @@
+{
+  "dataset_name": "OSWorld + Mind2Web Real Environment State Dataset",
+  "version": "1.0",
+  "date_created": "2026-09-08",
+  "zero_synthetic_data_verified": true,
+  "synthetic_perturbations": "None. Absolutely zero synthetic states, synthetic apps, synthetic files, synthetic tabs, synthetic processes, or LLM-generated states.",
+  "primary_sources": [
+    {
+      "name": "OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments",
+      "authors": "Xie et al., NeurIPS 2024",
+      "official_url": "https://os-world.github.io/",
+      "repository": "https://github.com/xlang-ai/OSWorld",
+      "license": "Apache 2.0",
+      "number_of_tasks_extracted": 369,
+      "domains": [
+        "chrome",
+        "gimp",
+        "libreoffice_calc",
+        "libreoffice_impress",
+        "libreoffice_writer",
+        "multi_apps",
+        "os",
+        "thunderbird",
+        "vlc",
+        "vs_code"
+      ],
+      "observed_modalities": [
+        "Desktop Applications",
+        "Real File Paths",
+        "Launch Processes",
+        "Browser Tabs"
+      ]
+    },
+    {
+      "name": "Mind2Web: Towards a Generalist Agent for the Web",
+      "authors": "Deng et al., NeurIPS 2023",
+      "official_url": "https://osu-nlp-group.github.io/Mind2Web/",
+      "repository": "https://github.com/OSU-NLP-Group/Mind2Web",
+      "license": "CC BY 4.0",
+      "number_of_tasks_extracted": 60,
+      "domains": [
+        "Entertainment",
+        "Shopping",
+        "Travel"
+      ],
+      "observed_modalities": [
+        "Web Browser Tabs",
+        "Domain Identities",
+        "Completed Subtask Action Sequences"
+      ]
+    }
+  ],
+  "labeling_methodology": {
+    "mismatch_0_definition": "Identical task environment state observed under verified runtime conditions where all required resources and prerequisite states are satisfied.",
+    "mismatch_1_definition": "Cross-task environment states where the current state belongs to a distinct real task with conflicting applications, files, URLs, or processes, or intra-trajectory checkpoint mismatch where required subtasks are uncompleted.",
+    "leakage_prevention": "Strict UUID trajectory partitioning ensuring Train, Validation, and Test task IDs are 100% disjoint."
+  },
+  "split_summary": {
+    "train_pairs": 540,
+    "val_pairs": 118,
+    "test_pairs": 132,
+    "train_trajectories": 300,
+    "val_trajectories": 64,
+    "test_trajectories": 65
+  }
+}

@@ -1,0 +1,1190 @@
+[
+  {
+    "pair_id": "test_neg_8ba5ae7a-5ae5-4eab-9fcc-5dd4fe3abf89_vs_b20e1dc4-651b-46e1-8470-16250657f2a8",
+    "task_id": "8ba5ae7a-5ae5-4eab-9fcc-5dd4fe3abf89",
+    "domain": "vlc",
+    "ground_truth": 1,
+    "predicted_probability": 0.9818,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_e2392362-125e-4f76-a2ee-524b183a3412_match",
+    "task_id": "e2392362-125e-4f76-a2ee-524b183a3412",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.0146,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_e2392362-125e-4f76-a2ee-524b183a3412_vs_734d6579-c07d-47a8-9ae2-13339795476b",
+    "task_id": "e2392362-125e-4f76-a2ee-524b183a3412",
+    "domain": "multi_apps",
+    "ground_truth": 1,
+    "predicted_probability": 0.9437,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_d1942a73-745f-44c5-ba30-0d0c7925f5d2_match",
+    "task_id": "d1942a73-745f-44c5-ba30-0d0c7925f5d2",
+    "domain": "Entertainment",
+    "ground_truth": 0,
+    "predicted_probability": 0.0276,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_1954cced-e748-45c4-9c26-9855b97fbc5e_vs_0bf05a7d-b28b-44d2-955a-50b41e24012a",
+    "task_id": "1954cced-e748-45c4-9c26-9855b97fbc5e",
+    "domain": "libreoffice_calc",
+    "ground_truth": 1,
+    "predicted_probability": 0.3134,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_a746add2-cab0-4740-ac36-c3769d9bfb46_vs_0a2e43bf-b26c-4631-a966-af9dfa12c9e5",
+    "task_id": "a746add2-cab0-4740-ac36-c3769d9bfb46",
+    "domain": "gimp",
+    "ground_truth": 1,
+    "predicted_probability": 0.9827,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_734d6579-c07d-47a8-9ae2-13339795476b_vs_236833a3-5704-47fc-888c-4f298f09f799",
+    "task_id": "734d6579-c07d-47a8-9ae2-13339795476b",
+    "domain": "gimp",
+    "ground_truth": 1,
+    "predicted_probability": 0.932,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_22a4636f-8179-4357-8e87-d1743ece1f81_match",
+    "task_id": "22a4636f-8179-4357-8e87-d1743ece1f81",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.0191,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_2bce1096-f573-4752-94a9-e139ce37eb27_vs_af2d657a-e6b3-4c6a-9f67-9e3ed015974c",
+    "task_id": "2bce1096-f573-4752-94a9-e139ce37eb27",
+    "domain": "Entertainment",
+    "ground_truth": 1,
+    "predicted_probability": 0.9838,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_a11022ab-f733-4295-a2f2-0da19cccc1b4_intra_divergence",
+    "task_id": "a11022ab-f733-4295-a2f2-0da19cccc1b4",
+    "domain": "Travel",
+    "ground_truth": 1,
+    "predicted_probability": 0.9931,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_c7c1e4c3-9e92-4eba-a4b8-689953975ea4_match",
+    "task_id": "c7c1e4c3-9e92-4eba-a4b8-689953975ea4",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.0122,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_734d6579-c07d-47a8-9ae2-13339795476b_match",
+    "task_id": "734d6579-c07d-47a8-9ae2-13339795476b",
+    "domain": "gimp",
+    "ground_truth": 0,
+    "predicted_probability": 0.0152,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_550ce7e7-747b-495f-b122-acdc4d0b8e54_match",
+    "task_id": "550ce7e7-747b-495f-b122-acdc4d0b8e54",
+    "domain": "libreoffice_impress",
+    "ground_truth": 0,
+    "predicted_probability": 0.014,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_a746add2-cab0-4740-ac36-c3769d9bfb46_vs_227d2f97-562b-4ccb-ae47-a5ec9e142fbb",
+    "task_id": "a746add2-cab0-4740-ac36-c3769d9bfb46",
+    "domain": "gimp",
+    "ground_truth": 1,
+    "predicted_probability": 0.5341,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_d1942a73-745f-44c5-ba30-0d0c7925f5d2_vs_4e9f0faf-2ecc-4ae8-a804-28c9a75d1ddc",
+    "task_id": "d1942a73-745f-44c5-ba30-0d0c7925f5d2",
+    "domain": "Entertainment",
+    "ground_truth": 1,
+    "predicted_probability": 0.9893,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_b20e1dc4-651b-46e1-8470-16250657f2a8_vs_9219480b-3aed-47fc-8bac-d2cffc5849f7",
+    "task_id": "b20e1dc4-651b-46e1-8470-16250657f2a8",
+    "domain": "Travel",
+    "ground_truth": 1,
+    "predicted_probability": 0.9864,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_8f080098-ddb1-424c-b438-4e96e5e4786e_vs_236833a3-5704-47fc-888c-4f298f09f799",
+    "task_id": "8f080098-ddb1-424c-b438-4e96e5e4786e",
+    "domain": "vlc",
+    "ground_truth": 1,
+    "predicted_probability": 0.8571,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_f3b19d1e-2d48-44e9-b4e1-defcae1a0197_match",
+    "task_id": "f3b19d1e-2d48-44e9-b4e1-defcae1a0197",
+    "domain": "chrome",
+    "ground_truth": 0,
+    "predicted_probability": 0.0171,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_acb0f96b-e27c-44d8-b55f-7cb76609dfcd_match",
+    "task_id": "acb0f96b-e27c-44d8-b55f-7cb76609dfcd",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.0173,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_9439a27b-18ae-42d8-9778-5f68f891805e_vs_6054afcb-5bab-4702-90a0-b259b5d3217c",
+    "task_id": "9439a27b-18ae-42d8-9778-5f68f891805e",
+    "domain": "vs_code",
+    "ground_truth": 1,
+    "predicted_probability": 0.9785,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_d1942a73-745f-44c5-ba30-0d0c7925f5d2_vs_0a2e43bf-b26c-4631-a966-af9dfa12c9e5",
+    "task_id": "d1942a73-745f-44c5-ba30-0d0c7925f5d2",
+    "domain": "Entertainment",
+    "ground_truth": 1,
+    "predicted_probability": 0.9798,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_39b037ac-0a11-4b05-8919-b4f9863fd0cd_match",
+    "task_id": "39b037ac-0a11-4b05-8919-b4f9863fd0cd",
+    "domain": "Entertainment",
+    "ground_truth": 0,
+    "predicted_probability": 0.0243,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_4f07fbe9-70de-4927-a4d5-bb28bc12c52c_match",
+    "task_id": "4f07fbe9-70de-4927-a4d5-bb28bc12c52c",
+    "domain": "libreoffice_calc",
+    "ground_truth": 0,
+    "predicted_probability": 0.0207,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_acb0f96b-e27c-44d8-b55f-7cb76609dfcd_vs_7f52cab9-535c-4835-ac8c-391ee64dc930",
+    "task_id": "acb0f96b-e27c-44d8-b55f-7cb76609dfcd",
+    "domain": "multi_apps",
+    "ground_truth": 1,
+    "predicted_probability": 0.0183,
+    "predicted_label": 0,
+    "is_correct": false
+  },
+  {
+    "pair_id": "test_pos_227d2f97-562b-4ccb-ae47-a5ec9e142fbb_match",
+    "task_id": "227d2f97-562b-4ccb-ae47-a5ec9e142fbb",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.0125,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_4e9f0faf-2ecc-4ae8-a804-28c9a75d1ddc_match",
+    "task_id": "4e9f0faf-2ecc-4ae8-a804-28c9a75d1ddc",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.0116,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_f2f531ff-94d5-4320-8594-7ae5d3a52af5_vs_d1942a73-745f-44c5-ba30-0d0c7925f5d2",
+    "task_id": "f2f531ff-94d5-4320-8594-7ae5d3a52af5",
+    "domain": "Entertainment",
+    "ground_truth": 1,
+    "predicted_probability": 0.1795,
+    "predicted_label": 0,
+    "is_correct": false
+  },
+  {
+    "pair_id": "test_pos_9439a27b-18ae-42d8-9778-5f68f891805e_match",
+    "task_id": "9439a27b-18ae-42d8-9778-5f68f891805e",
+    "domain": "vs_code",
+    "ground_truth": 0,
+    "predicted_probability": 0.0233,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_39b037ac-0a11-4b05-8919-b4f9863fd0cd_vs_8ba5ae7a-5ae5-4eab-9fcc-5dd4fe3abf89",
+    "task_id": "39b037ac-0a11-4b05-8919-b4f9863fd0cd",
+    "domain": "Entertainment",
+    "ground_truth": 1,
+    "predicted_probability": 0.9763,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_358aa0a7-6677-453f-ae35-e440f004c31e_match",
+    "task_id": "358aa0a7-6677-453f-ae35-e440f004c31e",
+    "domain": "libreoffice_impress",
+    "ground_truth": 0,
+    "predicted_probability": 0.0129,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_f7dfbef3-7697-431c-883a-db8583a4e4f9_match",
+    "task_id": "f7dfbef3-7697-431c-883a-db8583a4e4f9",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.0105,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_c867c42d-a52d-4a24-8ae3-f75d256b5618_match",
+    "task_id": "c867c42d-a52d-4a24-8ae3-f75d256b5618",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.017,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_8ba5ae7a-5ae5-4eab-9fcc-5dd4fe3abf89_vs_3680a5ee-6870-426a-a997-eba929a0d25c",
+    "task_id": "8ba5ae7a-5ae5-4eab-9fcc-5dd4fe3abf89",
+    "domain": "vlc",
+    "ground_truth": 1,
+    "predicted_probability": 0.9832,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_f2f531ff-94d5-4320-8594-7ae5d3a52af5_vs_aa3a8974-2e85-438b-b29e-a64df44deb4b",
+    "task_id": "f2f531ff-94d5-4320-8594-7ae5d3a52af5",
+    "domain": "Entertainment",
+    "ground_truth": 1,
+    "predicted_probability": 0.9811,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_3a7c8185-25c1-4941-bd7b-96e823c9f21f_vs_c7c1e4c3-9e92-4eba-a4b8-689953975ea4",
+    "task_id": "3a7c8185-25c1-4941-bd7b-96e823c9f21f",
+    "domain": "libreoffice_calc",
+    "ground_truth": 1,
+    "predicted_probability": 0.8358,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_2bce1096-f573-4752-94a9-e139ce37eb27_match",
+    "task_id": "2bce1096-f573-4752-94a9-e139ce37eb27",
+    "domain": "Entertainment",
+    "ground_truth": 0,
+    "predicted_probability": 0.0241,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_8ba5ae7a-5ae5-4eab-9fcc-5dd4fe3abf89_match",
+    "task_id": "8ba5ae7a-5ae5-4eab-9fcc-5dd4fe3abf89",
+    "domain": "vlc",
+    "ground_truth": 0,
+    "predicted_probability": 0.03,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_aa3a8974-2e85-438b-b29e-a64df44deb4b_match",
+    "task_id": "aa3a8974-2e85-438b-b29e-a64df44deb4b",
+    "domain": "libreoffice_calc",
+    "ground_truth": 0,
+    "predicted_probability": 0.0216,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_21df9241-f8d7-4509-b7f1-37e501a823f7_vs_554785e9-4523-4e7a-b8e1-8016f565f56a",
+    "task_id": "21df9241-f8d7-4509-b7f1-37e501a823f7",
+    "domain": "libreoffice_calc",
+    "ground_truth": 1,
+    "predicted_probability": 0.9551,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_a11022ab-f733-4295-a2f2-0da19cccc1b4_completed_match",
+    "task_id": "a11022ab-f733-4295-a2f2-0da19cccc1b4",
+    "domain": "Travel",
+    "ground_truth": 0,
+    "predicted_probability": 0.0117,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_6054afcb-5bab-4702-90a0-b259b5d3217c_vs_06ca5602-62ca-47f6-ad4f-da151cde54cc",
+    "task_id": "6054afcb-5bab-4702-90a0-b259b5d3217c",
+    "domain": "libreoffice_calc",
+    "ground_truth": 1,
+    "predicted_probability": 0.9797,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_da46d875-6b82-4681-9284-653b0c7ae241_vs_9219480b-3aed-47fc-8bac-d2cffc5849f7",
+    "task_id": "da46d875-6b82-4681-9284-653b0c7ae241",
+    "domain": "chrome",
+    "ground_truth": 1,
+    "predicted_probability": 0.9697,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_f2f531ff-94d5-4320-8594-7ae5d3a52af5_match",
+    "task_id": "f2f531ff-94d5-4320-8594-7ae5d3a52af5",
+    "domain": "Entertainment",
+    "ground_truth": 0,
+    "predicted_probability": 0.0201,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_b20e1dc4-651b-46e1-8470-16250657f2a8_completed_match",
+    "task_id": "b20e1dc4-651b-46e1-8470-16250657f2a8",
+    "domain": "Travel",
+    "ground_truth": 0,
+    "predicted_probability": 0.0094,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_8f080098-ddb1-424c-b438-4e96e5e4786e_match",
+    "task_id": "8f080098-ddb1-424c-b438-4e96e5e4786e",
+    "domain": "vlc",
+    "ground_truth": 0,
+    "predicted_probability": 0.0213,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_c0eeead1-f8ea-4819-a6da-ef0108b40c89_vs_7f52cab9-535c-4835-ac8c-391ee64dc930",
+    "task_id": "c0eeead1-f8ea-4819-a6da-ef0108b40c89",
+    "domain": "Travel",
+    "ground_truth": 1,
+    "predicted_probability": 0.976,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_8f080098-ddb1-424c-b438-4e96e5e4786e_vs_21df9241-f8d7-4509-b7f1-37e501a823f7",
+    "task_id": "8f080098-ddb1-424c-b438-4e96e5e4786e",
+    "domain": "vlc",
+    "ground_truth": 1,
+    "predicted_probability": 0.9778,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_d1acdb87-bb67-4f30-84aa-990e56a09c92_match",
+    "task_id": "d1acdb87-bb67-4f30-84aa-990e56a09c92",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.0104,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_c0eeead1-f8ea-4819-a6da-ef0108b40c89_match",
+    "task_id": "c0eeead1-f8ea-4819-a6da-ef0108b40c89",
+    "domain": "Travel",
+    "ground_truth": 0,
+    "predicted_probability": 0.0254,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_2bce1096-f573-4752-94a9-e139ce37eb27_completed_match",
+    "task_id": "2bce1096-f573-4752-94a9-e139ce37eb27",
+    "domain": "Entertainment",
+    "ground_truth": 0,
+    "predicted_probability": 0.0097,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_6054afcb-5bab-4702-90a0-b259b5d3217c_match",
+    "task_id": "6054afcb-5bab-4702-90a0-b259b5d3217c",
+    "domain": "libreoffice_calc",
+    "ground_truth": 0,
+    "predicted_probability": 0.0217,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_fba2c100-79e8-42df-ae74-b592418d54f4_match",
+    "task_id": "fba2c100-79e8-42df-ae74-b592418d54f4",
+    "domain": "vlc",
+    "ground_truth": 0,
+    "predicted_probability": 0.0179,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_d1942a73-745f-44c5-ba30-0d0c7925f5d2_completed_match",
+    "task_id": "d1942a73-745f-44c5-ba30-0d0c7925f5d2",
+    "domain": "Entertainment",
+    "ground_truth": 0,
+    "predicted_probability": 0.0079,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_f3b19d1e-2d48-44e9-b4e1-defcae1a0197_vs_e8172110-ec08-421b-a6f5-842e6451911f",
+    "task_id": "f3b19d1e-2d48-44e9-b4e1-defcae1a0197",
+    "domain": "chrome",
+    "ground_truth": 1,
+    "predicted_probability": 0.972,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_e8172110-ec08-421b-a6f5-842e6451911f_match",
+    "task_id": "e8172110-ec08-421b-a6f5-842e6451911f",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.0144,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_2b9493d7-49b8-493a-a71b-56cd1f4d6908_match",
+    "task_id": "2b9493d7-49b8-493a-a71b-56cd1f4d6908",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.0132,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_a11022ab-f733-4295-a2f2-0da19cccc1b4_vs_9219480b-3aed-47fc-8bac-d2cffc5849f7",
+    "task_id": "a11022ab-f733-4295-a2f2-0da19cccc1b4",
+    "domain": "Travel",
+    "ground_truth": 1,
+    "predicted_probability": 0.9871,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_c0eeead1-f8ea-4819-a6da-ef0108b40c89_intra_divergence",
+    "task_id": "c0eeead1-f8ea-4819-a6da-ef0108b40c89",
+    "domain": "Travel",
+    "ground_truth": 1,
+    "predicted_probability": 0.9948,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_6f81754e-285d-4ce0-b59e-af7edb02d108_match",
+    "task_id": "6f81754e-285d-4ce0-b59e-af7edb02d108",
+    "domain": "libreoffice_writer",
+    "ground_truth": 0,
+    "predicted_probability": 0.0113,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_4b2030ff-b83c-445f-bf87-9c8fbc68498b_completed_match",
+    "task_id": "4b2030ff-b83c-445f-bf87-9c8fbc68498b",
+    "domain": "Shopping",
+    "ground_truth": 0,
+    "predicted_probability": 0.0089,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_f201fbc3-44e6-46fc-bcaa-432f9815454c_vs_c867c42d-a52d-4a24-8ae3-f75d256b5618",
+    "task_id": "f201fbc3-44e6-46fc-bcaa-432f9815454c",
+    "domain": "thunderbird",
+    "ground_truth": 1,
+    "predicted_probability": 0.9433,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_9439a27b-18ae-42d8-9778-5f68f891805e_vs_cdbd410d-170a-426d-b6d2-60dafaffe853",
+    "task_id": "9439a27b-18ae-42d8-9778-5f68f891805e",
+    "domain": "vs_code",
+    "ground_truth": 1,
+    "predicted_probability": 0.9631,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_14b5885e-5454-465f-92bf-d8f7315c4a46_intra_divergence",
+    "task_id": "14b5885e-5454-465f-92bf-d8f7315c4a46",
+    "domain": "Travel",
+    "ground_truth": 1,
+    "predicted_probability": 0.9937,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_0a2e43bf-b26c-4631-a966-af9dfa12c9e5_match",
+    "task_id": "0a2e43bf-b26c-4631-a966-af9dfa12c9e5",
+    "domain": "libreoffice_calc",
+    "ground_truth": 0,
+    "predicted_probability": 0.0157,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_46a3683f-fbe0-40d0-8729-6c7964d994e6_vs_f201fbc3-44e6-46fc-bcaa-432f9815454c",
+    "task_id": "46a3683f-fbe0-40d0-8729-6c7964d994e6",
+    "domain": "Shopping",
+    "ground_truth": 1,
+    "predicted_probability": 0.8796,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_c0eeead1-f8ea-4819-a6da-ef0108b40c89_completed_match",
+    "task_id": "c0eeead1-f8ea-4819-a6da-ef0108b40c89",
+    "domain": "Travel",
+    "ground_truth": 0,
+    "predicted_probability": 0.0111,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_8f080098-ddb1-424c-b438-4e96e5e4786e_vs_cdbd410d-170a-426d-b6d2-60dafaffe853",
+    "task_id": "8f080098-ddb1-424c-b438-4e96e5e4786e",
+    "domain": "vlc",
+    "ground_truth": 1,
+    "predicted_probability": 0.9934,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_030eeff7-b492-4218-b312-701ec99ee0cc_vs_f201fbc3-44e6-46fc-bcaa-432f9815454c",
+    "task_id": "030eeff7-b492-4218-b312-701ec99ee0cc",
+    "domain": "chrome",
+    "ground_truth": 1,
+    "predicted_probability": 0.9833,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_2bce1096-f573-4752-94a9-e139ce37eb27_intra_divergence",
+    "task_id": "2bce1096-f573-4752-94a9-e139ce37eb27",
+    "domain": "Entertainment",
+    "ground_truth": 1,
+    "predicted_probability": 0.9952,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_bb83cab4-e5c7-42c7-a67b-e46068032b86_match",
+    "task_id": "bb83cab4-e5c7-42c7-a67b-e46068032b86",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.013,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_4b2030ff-b83c-445f-bf87-9c8fbc68498b_match",
+    "task_id": "4b2030ff-b83c-445f-bf87-9c8fbc68498b",
+    "domain": "Shopping",
+    "ground_truth": 0,
+    "predicted_probability": 0.0192,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_39b037ac-0a11-4b05-8919-b4f9863fd0cd_intra_divergence",
+    "task_id": "39b037ac-0a11-4b05-8919-b4f9863fd0cd",
+    "domain": "Entertainment",
+    "ground_truth": 1,
+    "predicted_probability": 0.9946,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_a746add2-cab0-4740-ac36-c3769d9bfb46_match",
+    "task_id": "a746add2-cab0-4740-ac36-c3769d9bfb46",
+    "domain": "gimp",
+    "ground_truth": 0,
+    "predicted_probability": 0.014,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_39b037ac-0a11-4b05-8919-b4f9863fd0cd_completed_match",
+    "task_id": "39b037ac-0a11-4b05-8919-b4f9863fd0cd",
+    "domain": "Entertainment",
+    "ground_truth": 0,
+    "predicted_probability": 0.0067,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_b20e1dc4-651b-46e1-8470-16250657f2a8_match",
+    "task_id": "b20e1dc4-651b-46e1-8470-16250657f2a8",
+    "domain": "Travel",
+    "ground_truth": 0,
+    "predicted_probability": 0.0187,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_550ce7e7-747b-495f-b122-acdc4d0b8e54_vs_b20e1dc4-651b-46e1-8470-16250657f2a8",
+    "task_id": "550ce7e7-747b-495f-b122-acdc4d0b8e54",
+    "domain": "libreoffice_impress",
+    "ground_truth": 1,
+    "predicted_probability": 0.9896,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_fba2c100-79e8-42df-ae74-b592418d54f4_vs_a746add2-cab0-4740-ac36-c3769d9bfb46",
+    "task_id": "fba2c100-79e8-42df-ae74-b592418d54f4",
+    "domain": "vlc",
+    "ground_truth": 1,
+    "predicted_probability": 0.9378,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_227d2f97-562b-4ccb-ae47-a5ec9e142fbb_vs_a434992a-89df-4577-925c-0c58b747f0f4",
+    "task_id": "227d2f97-562b-4ccb-ae47-a5ec9e142fbb",
+    "domain": "multi_apps",
+    "ground_truth": 1,
+    "predicted_probability": 0.9556,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_cdbd410d-170a-426d-b6d2-60dafaffe853_match",
+    "task_id": "cdbd410d-170a-426d-b6d2-60dafaffe853",
+    "domain": "Shopping",
+    "ground_truth": 0,
+    "predicted_probability": 0.0222,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_b20e1dc4-651b-46e1-8470-16250657f2a8_intra_divergence",
+    "task_id": "b20e1dc4-651b-46e1-8470-16250657f2a8",
+    "domain": "Travel",
+    "ground_truth": 1,
+    "predicted_probability": 0.9938,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_4783cc41-c03c-4e1b-89b4-50658f642bd5_vs_227d2f97-562b-4ccb-ae47-a5ec9e142fbb",
+    "task_id": "4783cc41-c03c-4e1b-89b4-50658f642bd5",
+    "domain": "os",
+    "ground_truth": 1,
+    "predicted_probability": 0.9861,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_c867c42d-a52d-4a24-8ae3-f75d256b5618_vs_227d2f97-562b-4ccb-ae47-a5ec9e142fbb",
+    "task_id": "c867c42d-a52d-4a24-8ae3-f75d256b5618",
+    "domain": "multi_apps",
+    "ground_truth": 1,
+    "predicted_probability": 0.9609,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_46a3683f-fbe0-40d0-8729-6c7964d994e6_completed_match",
+    "task_id": "46a3683f-fbe0-40d0-8729-6c7964d994e6",
+    "domain": "Shopping",
+    "ground_truth": 0,
+    "predicted_probability": 0.008,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_8ba5ae7a-5ae5-4eab-9fcc-5dd4fe3abf89_vs_c867c42d-a52d-4a24-8ae3-f75d256b5618",
+    "task_id": "8ba5ae7a-5ae5-4eab-9fcc-5dd4fe3abf89",
+    "domain": "vlc",
+    "ground_truth": 1,
+    "predicted_probability": 0.9797,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_0bf05a7d-b28b-44d2-955a-50b41e24012a_match",
+    "task_id": "0bf05a7d-b28b-44d2-955a-50b41e24012a",
+    "domain": "libreoffice_calc",
+    "ground_truth": 0,
+    "predicted_probability": 0.0142,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_3680a5ee-6870-426a-a997-eba929a0d25c_match",
+    "task_id": "3680a5ee-6870-426a-a997-eba929a0d25c",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.0151,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_c0eeead1-f8ea-4819-a6da-ef0108b40c89_vs_3a7c8185-25c1-4941-bd7b-96e823c9f21f",
+    "task_id": "c0eeead1-f8ea-4819-a6da-ef0108b40c89",
+    "domain": "Travel",
+    "ground_truth": 1,
+    "predicted_probability": 0.982,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_a462a795-fdc7-4b23-b689-e8b6df786b78_vs_6054afcb-5bab-4702-90a0-b259b5d3217c",
+    "task_id": "a462a795-fdc7-4b23-b689-e8b6df786b78",
+    "domain": "os",
+    "ground_truth": 1,
+    "predicted_probability": 0.9831,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_cdbd410d-170a-426d-b6d2-60dafaffe853_vs_da46d875-6b82-4681-9284-653b0c7ae241",
+    "task_id": "cdbd410d-170a-426d-b6d2-60dafaffe853",
+    "domain": "Shopping",
+    "ground_truth": 1,
+    "predicted_probability": 0.9751,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_46a3683f-fbe0-40d0-8729-6c7964d994e6_match",
+    "task_id": "46a3683f-fbe0-40d0-8729-6c7964d994e6",
+    "domain": "Shopping",
+    "ground_truth": 0,
+    "predicted_probability": 0.0235,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_9f935cce-0a9f-435f-8007-817732bfc0a5_vs_236833a3-5704-47fc-888c-4f298f09f799",
+    "task_id": "9f935cce-0a9f-435f-8007-817732bfc0a5",
+    "domain": "chrome",
+    "ground_truth": 1,
+    "predicted_probability": 0.8783,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_480bcfea-d68f-4aaa-a0a9-2589ef319381_match",
+    "task_id": "480bcfea-d68f-4aaa-a0a9-2589ef319381",
+    "domain": "chrome",
+    "ground_truth": 0,
+    "predicted_probability": 0.0125,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_3680a5ee-6870-426a-a997-eba929a0d25c_vs_d1942a73-745f-44c5-ba30-0d0c7925f5d2",
+    "task_id": "3680a5ee-6870-426a-a997-eba929a0d25c",
+    "domain": "multi_apps",
+    "ground_truth": 1,
+    "predicted_probability": 0.9925,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_a462a795-fdc7-4b23-b689-e8b6df786b78_match",
+    "task_id": "a462a795-fdc7-4b23-b689-e8b6df786b78",
+    "domain": "os",
+    "ground_truth": 0,
+    "predicted_probability": 0.0461,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_a434992a-89df-4577-925c-0c58b747f0f4_match",
+    "task_id": "a434992a-89df-4577-925c-0c58b747f0f4",
+    "domain": "libreoffice_impress",
+    "ground_truth": 0,
+    "predicted_probability": 0.0165,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_2b9493d7-49b8-493a-a71b-56cd1f4d6908_vs_a462a795-fdc7-4b23-b689-e8b6df786b78",
+    "task_id": "2b9493d7-49b8-493a-a71b-56cd1f4d6908",
+    "domain": "multi_apps",
+    "ground_truth": 1,
+    "predicted_probability": 0.9901,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_66399b0d-8fda-4618-95c4-bfc6191617e9_vs_aa3a8974-2e85-438b-b29e-a64df44deb4b",
+    "task_id": "66399b0d-8fda-4618-95c4-bfc6191617e9",
+    "domain": "libreoffice_writer",
+    "ground_truth": 1,
+    "predicted_probability": 0.9403,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_f2f531ff-94d5-4320-8594-7ae5d3a52af5_intra_divergence",
+    "task_id": "f2f531ff-94d5-4320-8594-7ae5d3a52af5",
+    "domain": "Entertainment",
+    "ground_truth": 1,
+    "predicted_probability": 0.9926,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_0a2e43bf-b26c-4631-a966-af9dfa12c9e5_vs_aa3a8974-2e85-438b-b29e-a64df44deb4b",
+    "task_id": "0a2e43bf-b26c-4631-a966-af9dfa12c9e5",
+    "domain": "libreoffice_calc",
+    "ground_truth": 1,
+    "predicted_probability": 0.3384,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_9219480b-3aed-47fc-8bac-d2cffc5849f7_vs_acb0f96b-e27c-44d8-b55f-7cb76609dfcd",
+    "task_id": "9219480b-3aed-47fc-8bac-d2cffc5849f7",
+    "domain": "multi_apps",
+    "ground_truth": 1,
+    "predicted_probability": 0.9761,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_030eeff7-b492-4218-b312-701ec99ee0cc_match",
+    "task_id": "030eeff7-b492-4218-b312-701ec99ee0cc",
+    "domain": "chrome",
+    "ground_truth": 0,
+    "predicted_probability": 0.0126,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_4b2030ff-b83c-445f-bf87-9c8fbc68498b_intra_divergence",
+    "task_id": "4b2030ff-b83c-445f-bf87-9c8fbc68498b",
+    "domain": "Shopping",
+    "ground_truth": 1,
+    "predicted_probability": 0.993,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_55631305-2957-4343-b4f7-73aa68acba47_intra_divergence",
+    "task_id": "55631305-2957-4343-b4f7-73aa68acba47",
+    "domain": "Entertainment",
+    "ground_truth": 1,
+    "predicted_probability": 0.9947,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_55631305-2957-4343-b4f7-73aa68acba47_completed_match",
+    "task_id": "55631305-2957-4343-b4f7-73aa68acba47",
+    "domain": "Entertainment",
+    "ground_truth": 0,
+    "predicted_probability": 0.0085,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_4b2030ff-b83c-445f-bf87-9c8fbc68498b_vs_06ca5602-62ca-47f6-ad4f-da151cde54cc",
+    "task_id": "4b2030ff-b83c-445f-bf87-9c8fbc68498b",
+    "domain": "Shopping",
+    "ground_truth": 1,
+    "predicted_probability": 0.9821,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_1954cced-e748-45c4-9c26-9855b97fbc5e_match",
+    "task_id": "1954cced-e748-45c4-9c26-9855b97fbc5e",
+    "domain": "libreoffice_calc",
+    "ground_truth": 0,
+    "predicted_probability": 0.0161,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_f2f531ff-94d5-4320-8594-7ae5d3a52af5_completed_match",
+    "task_id": "f2f531ff-94d5-4320-8594-7ae5d3a52af5",
+    "domain": "Entertainment",
+    "ground_truth": 0,
+    "predicted_probability": 0.0083,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_734d6579-c07d-47a8-9ae2-13339795476b_vs_fba2c100-79e8-42df-ae74-b592418d54f4",
+    "task_id": "734d6579-c07d-47a8-9ae2-13339795476b",
+    "domain": "gimp",
+    "ground_truth": 1,
+    "predicted_probability": 0.8775,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_9f3f70fc-5afc-4958-a7b7-3bb4fcb01805_vs_dcbe20e8-647f-4f1d-8696-f1c5bbb570e3",
+    "task_id": "9f3f70fc-5afc-4958-a7b7-3bb4fcb01805",
+    "domain": "chrome",
+    "ground_truth": 1,
+    "predicted_probability": 0.9787,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_21df9241-f8d7-4509-b7f1-37e501a823f7_vs_236833a3-5704-47fc-888c-4f298f09f799",
+    "task_id": "21df9241-f8d7-4509-b7f1-37e501a823f7",
+    "domain": "libreoffice_calc",
+    "ground_truth": 1,
+    "predicted_probability": 0.9516,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_14b5885e-5454-465f-92bf-d8f7315c4a46_match",
+    "task_id": "14b5885e-5454-465f-92bf-d8f7315c4a46",
+    "domain": "Travel",
+    "ground_truth": 0,
+    "predicted_probability": 0.0212,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_9219480b-3aed-47fc-8bac-d2cffc5849f7_vs_a746add2-cab0-4740-ac36-c3769d9bfb46",
+    "task_id": "9219480b-3aed-47fc-8bac-d2cffc5849f7",
+    "domain": "multi_apps",
+    "ground_truth": 1,
+    "predicted_probability": 0.957,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_06ca5602-62ca-47f6-ad4f-da151cde54cc_match",
+    "task_id": "06ca5602-62ca-47f6-ad4f-da151cde54cc",
+    "domain": "gimp",
+    "ground_truth": 0,
+    "predicted_probability": 0.0133,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_3a7c8185-25c1-4941-bd7b-96e823c9f21f_match",
+    "task_id": "3a7c8185-25c1-4941-bd7b-96e823c9f21f",
+    "domain": "libreoffice_calc",
+    "ground_truth": 0,
+    "predicted_probability": 0.0166,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_dd84e895-72fd-4023-a336-97689ded257c_match",
+    "task_id": "dd84e895-72fd-4023-a336-97689ded257c",
+    "domain": "thunderbird",
+    "ground_truth": 0,
+    "predicted_probability": 0.0212,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_9219480b-3aed-47fc-8bac-d2cffc5849f7_match",
+    "task_id": "9219480b-3aed-47fc-8bac-d2cffc5849f7",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.0199,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_236833a3-5704-47fc-888c-4f298f09f799_match",
+    "task_id": "236833a3-5704-47fc-888c-4f298f09f799",
+    "domain": "multi_apps",
+    "ground_truth": 0,
+    "predicted_probability": 0.011,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_3a7c8185-25c1-4941-bd7b-96e823c9f21f_vs_a434992a-89df-4577-925c-0c58b747f0f4",
+    "task_id": "3a7c8185-25c1-4941-bd7b-96e823c9f21f",
+    "domain": "libreoffice_calc",
+    "ground_truth": 1,
+    "predicted_probability": 0.9492,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_21df9241-f8d7-4509-b7f1-37e501a823f7_match",
+    "task_id": "21df9241-f8d7-4509-b7f1-37e501a823f7",
+    "domain": "libreoffice_calc",
+    "ground_truth": 0,
+    "predicted_probability": 0.0169,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_14b5885e-5454-465f-92bf-d8f7315c4a46_completed_match",
+    "task_id": "14b5885e-5454-465f-92bf-d8f7315c4a46",
+    "domain": "Travel",
+    "ground_truth": 0,
+    "predicted_probability": 0.01,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_46a3683f-fbe0-40d0-8729-6c7964d994e6_intra_divergence",
+    "task_id": "46a3683f-fbe0-40d0-8729-6c7964d994e6",
+    "domain": "Shopping",
+    "ground_truth": 1,
+    "predicted_probability": 0.9946,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_cdbd410d-170a-426d-b6d2-60dafaffe853_intra_divergence",
+    "task_id": "cdbd410d-170a-426d-b6d2-60dafaffe853",
+    "domain": "Shopping",
+    "ground_truth": 1,
+    "predicted_probability": 0.991,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_3680a5ee-6870-426a-a997-eba929a0d25c_vs_aa3a8974-2e85-438b-b29e-a64df44deb4b",
+    "task_id": "3680a5ee-6870-426a-a997-eba929a0d25c",
+    "domain": "multi_apps",
+    "ground_truth": 1,
+    "predicted_probability": 0.3594,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_4783cc41-c03c-4e1b-89b4-50658f642bd5_vs_f3b19d1e-2d48-44e9-b4e1-defcae1a0197",
+    "task_id": "4783cc41-c03c-4e1b-89b4-50658f642bd5",
+    "domain": "os",
+    "ground_truth": 1,
+    "predicted_probability": 0.98,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_d1942a73-745f-44c5-ba30-0d0c7925f5d2_intra_divergence",
+    "task_id": "d1942a73-745f-44c5-ba30-0d0c7925f5d2",
+    "domain": "Entertainment",
+    "ground_truth": 1,
+    "predicted_probability": 0.9947,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_af2d657a-e6b3-4c6a-9f67-9e3ed015974c_match",
+    "task_id": "af2d657a-e6b3-4c6a-9f67-9e3ed015974c",
+    "domain": "libreoffice_impress",
+    "ground_truth": 0,
+    "predicted_probability": 0.0184,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_neg_f2f531ff-94d5-4320-8594-7ae5d3a52af5_vs_af2d657a-e6b3-4c6a-9f67-9e3ed015974c",
+    "task_id": "f2f531ff-94d5-4320-8594-7ae5d3a52af5",
+    "domain": "Entertainment",
+    "ground_truth": 1,
+    "predicted_probability": 0.9834,
+    "predicted_label": 1,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_a11022ab-f733-4295-a2f2-0da19cccc1b4_match",
+    "task_id": "a11022ab-f733-4295-a2f2-0da19cccc1b4",
+    "domain": "Travel",
+    "ground_truth": 0,
+    "predicted_probability": 0.0248,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_cdbd410d-170a-426d-b6d2-60dafaffe853_completed_match",
+    "task_id": "cdbd410d-170a-426d-b6d2-60dafaffe853",
+    "domain": "Shopping",
+    "ground_truth": 0,
+    "predicted_probability": 0.0065,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_554785e9-4523-4e7a-b8e1-8016f565f56a_match",
+    "task_id": "554785e9-4523-4e7a-b8e1-8016f565f56a",
+    "domain": "gimp",
+    "ground_truth": 0,
+    "predicted_probability": 0.0157,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_66399b0d-8fda-4618-95c4-bfc6191617e9_match",
+    "task_id": "66399b0d-8fda-4618-95c4-bfc6191617e9",
+    "domain": "libreoffice_writer",
+    "ground_truth": 0,
+    "predicted_probability": 0.013,
+    "predicted_label": 0,
+    "is_correct": true
+  },
+  {
+    "pair_id": "test_pos_3299584d-8f11-4457-bf4c-ce98f7600250_match",
+    "task_id": "3299584d-8f11-4457-bf4c-ce98f7600250",
+    "domain": "chrome",
+    "ground_truth": 0,
+    "predicted_probability": 0.0157,
+    "predicted_label": 0,
+    "is_correct": true
+  }
+]

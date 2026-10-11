@@ -1,0 +1,182 @@
+{
+  "model_version": "JARVIS-StateMismatch-v1.0",
+  "evaluation_timestamp": "2026-09-08T22:52:49.501782",
+  "random_seed": 42,
+  "test_metrics": {
+    "accuracy": 0.9848,
+    "precision": 1.0,
+    "recall": 0.9697,
+    "f1": 0.9846,
+    "roc_auc": 0.9949,
+    "confusion_matrix": {
+      "TP": 64,
+      "TN": 66,
+      "FP": 0,
+      "FN": 2
+    },
+    "false_positive_rate": 0.0,
+    "false_negative_rate": 0.0303,
+    "class_distribution": {
+      "positives_actual": 66,
+      "negatives_actual": 66
+    },
+    "threshold": 0.3
+  },
+  "baseline_1_deterministic": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "roc_auc": 1.0,
+    "confusion_matrix": {
+      "TP": 66,
+      "TN": 66,
+      "FP": 0,
+      "FN": 0
+    },
+    "false_positive_rate": 0.0,
+    "false_negative_rate": 0.0,
+    "class_distribution": {
+      "positives_actual": 66,
+      "negatives_actual": 66
+    },
+    "threshold": 0.5
+  },
+  "baseline_2_logistic_regression": {
+    "accuracy": 0.9924,
+    "precision": 1.0,
+    "recall": 0.9848,
+    "f1": 0.9924,
+    "roc_auc": 1.0,
+    "confusion_matrix": {
+      "TP": 65,
+      "TN": 66,
+      "FP": 0,
+      "FN": 1
+    },
+    "false_positive_rate": 0.0,
+    "false_negative_rate": 0.0152,
+    "class_distribution": {
+      "positives_actual": 66,
+      "negatives_actual": 66
+    },
+    "threshold": 0.5
+  },
+  "baseline_3_frozen_transformer": {
+    "accuracy": 0.9773,
+    "precision": 1.0,
+    "recall": 0.9545,
+    "f1": 0.9767,
+    "roc_auc": 0.9931,
+    "confusion_matrix": {
+      "TP": 63,
+      "TN": 66,
+      "FP": 0,
+      "FN": 3
+    },
+    "false_positive_rate": 0.0,
+    "false_negative_rate": 0.0455,
+    "class_distribution": {
+      "positives_actual": 66,
+      "negatives_actual": 66
+    },
+    "threshold": 0.5
+  },
+  "ablation_study": {
+    "A_structured_features_only": {
+      "accuracy": 0.9924,
+      "precision": 1.0,
+      "recall": 0.9848,
+      "f1": 0.9924,
+      "roc_auc": 1.0,
+      "confusion_matrix": {
+        "TP": 65,
+        "TN": 66,
+        "FP": 0,
+        "FN": 1
+      },
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0152,
+      "class_distribution": {
+        "positives_actual": 66,
+        "negatives_actual": 66
+      },
+      "threshold": 0.5
+    },
+    "B_pretrained_encoder_without_fine_tuning": {
+      "accuracy": 0.9773,
+      "precision": 1.0,
+      "recall": 0.9545,
+      "f1": 0.9767,
+      "roc_auc": 0.9931,
+      "confusion_matrix": {
+        "TP": 63,
+        "TN": 66,
+        "FP": 0,
+        "FN": 3
+      },
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0455,
+      "class_distribution": {
+        "positives_actual": 66,
+        "negatives_actual": 66
+      },
+      "threshold": 0.5
+    },
+    "C_pretrained_encoder_pair_features": {
+      "accuracy": 0.9773,
+      "precision": 1.0,
+      "recall": 0.9545,
+      "f1": 0.9767,
+      "roc_auc": 0.9931,
+      "confusion_matrix": {
+        "TP": 63,
+        "TN": 66,
+        "FP": 0,
+        "FN": 3
+      },
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0455,
+      "class_distribution": {
+        "positives_actual": 66,
+        "negatives_actual": 66
+      },
+      "threshold": 0.5
+    },
+    "D_finetuned_pretrained_encoder_pair_features": {
+      "accuracy": 0.9848,
+      "precision": 1.0,
+      "recall": 0.9697,
+      "f1": 0.9846,
+      "roc_auc": 0.9949,
+      "confusion_matrix": {
+        "TP": 64,
+        "TN": 66,
+        "FP": 0,
+        "FN": 2
+      },
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0303,
+      "class_distribution": {
+        "positives_actual": 66,
+        "negatives_actual": 66
+      },
+      "threshold": 0.3
+    }
+  },
+  "parameter_summary": {
+    "pretrained_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "total_parameters": 23123201,
+    "trainable_parameters": 23123201,
+    "frozen_parameters": 0,
+    "fine_tuned_layers_count": 109,
+    "fine_tuned_layers_sample": [
+      "encoder.embeddings.word_embeddings.weight",
+      "encoder.embeddings.position_embeddings.weight",
+      "encoder.embeddings.token_type_embeddings.weight",
+      "encoder.embeddings.LayerNorm.weight",
+      "encoder.embeddings.LayerNorm.bias",
+      "..."
+    ]
+  }
+}

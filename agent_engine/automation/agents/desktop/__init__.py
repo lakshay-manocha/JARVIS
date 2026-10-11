@@ -1,0 +1,1 @@
+"""Desktop automation components for M5-K."""

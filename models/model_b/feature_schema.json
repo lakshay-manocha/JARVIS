@@ -1,0 +1,35 @@
+{
+  "model_version": "JARVIS-StateMismatch-v1.0",
+  "input_contract": {
+    "stored_state": {
+      "applications": "list[str] | NOT_AVAILABLE",
+      "files": "list[str] | NOT_AVAILABLE",
+      "browser_tabs": "list[str] | NOT_AVAILABLE",
+      "processes": "list[str] | NOT_AVAILABLE",
+      "completed_subtasks": "list[str] | NOT_AVAILABLE",
+      "timestamp": "float | null",
+      "resource_identities": "list[str]"
+    },
+    "current_state": {
+      "applications": "list[str] | NOT_AVAILABLE",
+      "files": "list[str] | NOT_AVAILABLE",
+      "browser_tabs": "list[str] | NOT_AVAILABLE",
+      "processes": "list[str] | NOT_AVAILABLE",
+      "completed_subtasks": "list[str] | NOT_AVAILABLE",
+      "timestamp": "float | null",
+      "resource_identities": "list[str]"
+    }
+  },
+  "canonical_serialization_template": "APPLICATIONS: {apps} | FILES: {files} | BROWSER TABS: {tabs} | PROCESSES: {procs} | COMPLETED SUBTASKS: {subtasks}",
+  "embedding_dimension": 384,
+  "pair_representation_dimension": 1536,
+  "classification_head_layers": [
+    "Linear(1536, 256)",
+    "ReLU()",
+    "Dropout(0.2)",
+    "Linear(256, 64)",
+    "ReLU()",
+    "Dropout(0.2)",
+    "Linear(64, 1)"
+  ]
+}
