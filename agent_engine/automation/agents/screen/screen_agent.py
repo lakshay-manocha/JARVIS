@@ -496,6 +496,21 @@ class ScreenAutomationAgent(AutomationAgent):
                 parameters=parameters,
             )
 
+            # Preserve compatibility with older perception backends that return
+            # a list of elements instead of the normalized dictionary contract.
+            if isinstance(result, list):
+                result = {
+                    "success": True,
+                    "elements": result,
+                    "count": len(result),
+                }
+
+            if not isinstance(result, dict):
+                raise TypeError(
+                    "ScreenAware actions must return a dictionary "
+                    "or a list of detected elements."
+                )
+
             execution_time = (
                 perf_counter() - start_time
             )

@@ -51,6 +51,7 @@ Author : Team Automation
 from __future__ import annotations
 
 from typing import Any
+from unittest import result
 
 from agent_engine.automation.models.execution_result import (
     AutomationExecutionResult,
@@ -162,6 +163,7 @@ class ExecutionResultIntegrator:
             timed_out=timed_out,
             failure_type=failure_type,
             error_message=error_message,
+            output=result.output,
         )
 
     # -------------------------------------------------------------------------

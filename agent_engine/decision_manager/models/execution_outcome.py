@@ -25,6 +25,8 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from agent_engine.contracts.enums import ExecutionStatus
 
+from typing import Any
+
 
 class FailureType(str, Enum):
     """
@@ -153,4 +155,12 @@ class ExecutionOutcome(BaseModel):
     model_config = ConfigDict(
         validate_assignment=True,
         extra="forbid",
+    )
+
+    output: Any | None = Field(
+        default=None,
+        description=(
+            "Structured output returned by the automation agent, "
+            "including screen-perception coordinates when available."
+        ),
     )

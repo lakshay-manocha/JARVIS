@@ -42,6 +42,10 @@ Author      : Team Agent
 
 from __future__ import annotations
 
+from agent_engine.automation.runtime_factory import (
+    build_automation_dispatcher,
+)
+
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from typing import Any
