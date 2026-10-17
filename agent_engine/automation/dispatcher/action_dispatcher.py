@@ -38,6 +38,8 @@ from time import perf_counter
 from agent_engine.agent_brain.models.interpreted_task import (
     InterpretedTask,
 )
+from agent_engine.safety.emergency_stop import emergency_stop
+
 from agent_engine.automation.exceptions import (
     AgentCapabilityError,
 )
@@ -190,9 +192,13 @@ class AutomationActionDispatcher:
         remains active.
         """
 
+
         start_time = perf_counter()
 
         try:
+
+            emergency_stop.check()
+
             request = self._request_builder.build(
                 task,
                 timeout_seconds=timeout_seconds,
@@ -216,6 +222,7 @@ class AutomationActionDispatcher:
                         f"action '{request.action}'."
                     )
 
+                emergency_stop.check()
                 automation_result = agent.execute(
                     request
                 )
@@ -243,6 +250,7 @@ class AutomationActionDispatcher:
                 request.action
             )
 
+            emergency_stop.check()
             handler(
                 **request.parameters
             )

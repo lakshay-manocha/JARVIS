@@ -1,4 +1,5 @@
 from pynput.mouse import Controller, Button
+from agent_engine.safety.emergency_stop import emergency_stop
 
 from .exceptions import (
     InvalidCoordinateError,

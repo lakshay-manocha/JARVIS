@@ -46,6 +46,11 @@ from agent_engine.automation.runtime_factory import (
     build_automation_dispatcher,
 )
 
+from agent_engine.safety.emergency_stop import (
+    emergency_stop,
+    EmergencyStopTriggered,
+)
+
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from typing import Any
@@ -423,6 +428,8 @@ class AgentOrchestrator:
                     ),
                 )
 
+                emergency_stop.check()
+
             # ----------------------------------------------------------------
             # Request completed
             # ----------------------------------------------------------------
@@ -463,6 +470,28 @@ class AgentOrchestrator:
                 planning_result=planning,
                 outcomes=outcomes,
                 decisions=decisions,
+            )
+        # ---------------------------------------------------------------------
+        # Emergency Exit
+        # ---------------------------------------------------------------------
+
+        except EmergencyStopTriggered as exc:
+            context.current_stage = ProcessingStage.FAILED
+            context.log(f"Emergency stop: {exc}")
+
+            self._emit(
+                "request.emergency_stopped",
+                request_id,
+                payload={"reason": str(exc)},
+            )
+
+            return OrchestrationResult(
+                request_id=request_id,
+                status=ResultStatus.FAILED,
+                context=context,
+                validation=validation,
+                planning_result=context.execution_plan,
+                error=f"EMERGENCY_STOP: {exc}",
             )
 
         # ---------------------------------------------------------------------
@@ -613,6 +642,7 @@ class AgentOrchestrator:
         bool,
     ]:
 
+        emergency_stop.check()
         node = context.execution_graph.get_node(
             task_id
         )
@@ -708,6 +738,7 @@ class AgentOrchestrator:
         attempt = 1
 
         while True:
+            emergency_stop.check()
 
             self.state_manager.set_state(
                 task_id,
@@ -903,6 +934,7 @@ class AgentOrchestrator:
                 decision.action
                 == DecisionAction.RETRY
             ):
+                emergency_stop.check()
 
                 self.state_manager.update_state(
                     task_id,

@@ -15,7 +15,7 @@ from typing import Protocol
 
 from agent_engine.agent_brain.models.interpreted_task import InterpretedTask
 from agent_engine.decision_manager.models.execution_outcome import ExecutionOutcome
-
+from agent_engine.safety.emergency_stop import emergency_stop
 
 class ActionDispatcher(Protocol):
     """Interface implemented by the Automation Engine execution layer."""
